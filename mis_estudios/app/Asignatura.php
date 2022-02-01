@@ -7,6 +7,14 @@ class Asignatura
     public int      $horas_semana;
     public string   $profesor;
 
+    public function __construct($codigo, $nombre, $horas_semana, $profesor){
+        //Esta función permite definir los atributos cuando se define la clase.
+        $this->codigo = $codigo;
+        $this->nombre = $nombre;
+        $this->horas_semana = $horas_semana;
+        $this->profesor = $profesor;
+    }
+
     public function crearUnidad(){
         // Usamos la variable $db que hemos definido en el archivo de configuración, la cual contiene la conexión a la base de datos.
         global $db;
@@ -16,6 +24,21 @@ class Asignatura
         $consulta->bindParam(':nombre', $this->nombre);
         $consulta->bindParam(':horas_semana', $this->horas_semana);
         $consulta->bindParam(':profesor', $this->profesor);
+
+        if($consulta->execute()){
+            // Si se ejecuta correctamente, devuelve TRUE
+            return true;
+        } else {
+            // Si no se ejecuta correctamente, devuelve FALSE
+            return false;
+        }
+    }
+
+    public function eliminarUnidad(){
+        global $db;
+        $query = "DELETE FROM mis_estudios.asignaturas WHERE codigo = :codigo;";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(':codigo', $this->codigo);
 
         if($consulta->execute()){
             // Si se ejecuta correctamente, devuelve TRUE
