@@ -15,7 +15,7 @@ class Asignatura
         $this->profesor = $profesor;
     }
 
-    public function crearUnidad(){
+    public function crear(){
         // Usamos la variable $db que hemos definido en el archivo de configuración, la cual contiene la conexión a la base de datos.
         global $db;
         $query = "INSERT INTO mis_estudios.asignaturas (`codigo`, `nombre`, `horas_semana`, `profesor`) VALUES (:codigo, :nombre, :horas_semana, :profesor);";
@@ -34,7 +34,7 @@ class Asignatura
         }
     }
 
-    public function eliminarUnidad(){
+    public function eliminar(){
         global $db;
         $query = "DELETE FROM mis_estudios.asignaturas WHERE codigo = :codigo;";
         $consulta = $db->prepare($query);
