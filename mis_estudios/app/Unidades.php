@@ -12,12 +12,47 @@ class Unidades
         $this->clave = $clave;
     }
 
-    public function crearUnidad($asignatura, $numero, $nombre, $porcentaje){
-        $this->asignatura   = $asignatura;
-        $this->numero       = $numero;
-        $this->nombre       = $nombre;
-        $this->porcentaje   = $porcentaje;
+    /**
+     * @param int|mixed|null $clave
+     */
+    public function setClave(mixed $clave): void
+    {
+        $this->clave = $clave;
+    }
 
+    /**
+     * @param int $asignatura
+     */
+    public function setAsignatura(int $asignatura): void
+    {
+        $this->asignatura = $asignatura;
+    }
+
+    /**
+     * @param int $numero
+     */
+    public function setNumero(int $numero): void
+    {
+        $this->numero = $numero;
+    }
+
+    /**
+     * @param string $nombre
+     */
+    public function setNombre(string $nombre): void
+    {
+        $this->nombre = $nombre;
+    }
+
+    /**
+     * @param int $porcentaje
+     */
+    public function setPorcentaje(int $porcentaje): void
+    {
+        $this->porcentaje = $porcentaje;
+    }
+
+    public function crear(){
         global $db;
         $query = "INSERT INTO mis_estudios.unidades (asignatura, numero, nombre, porcentaje) VALUES (:asignatura, :numero, :nombre, :porcentaje);";
         $consulta = $db->prepare($query);
@@ -33,5 +68,12 @@ class Unidades
             // Si no se ejecuta correctamente, devuelve FALSE
             return false;
         }
+    }
+
+    public function eliminar(){
+        global $db;
+        $query = "DELETE FROM mis_estudios.unidades WHERE clave = :clave;";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(':clave', $this->clave);
     }
 }
