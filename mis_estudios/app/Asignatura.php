@@ -7,7 +7,7 @@ class Asignatura
     public int      $horas_semana;
     public string   $profesor;
 
-    public function __construct($codigo, $nombre, $horas_semana, $profesor){
+    public function __construct($codigo, $nombre = NULL, $horas_semana = NULL, $profesor = NULL){
         //Esta función permite definir los atributos cuando se define la clase.
         $this->codigo = $codigo;
         $this->nombre = $nombre;
@@ -46,6 +46,35 @@ class Asignatura
         } else {
             // Si no se ejecuta correctamente, devuelve FALSE
             return false;
+        }
+    }
+
+    public function obtenerUnidades(){
+        global $db;
+        $query = "SELECT * FROM mis_estudios.unidades WHERE asignatura = :codigo;";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(':codigo', $this->codigo);
+
+        //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
+        if ($consulta->execute()){
+
+        } else {
+
+        }
+
+    }
+
+    public function obtenerInstrumentos(){
+        global $db;
+        $query = "SELECT instrumentos.*, unidades.numero, unidades.nombre FROM instrumentos INNER JOIN unidades on unidades.clave = instrumentos.unidad WHERE unidades.asignatura = :codigo;";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(':codigo', $this->codigo);
+
+        //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
+        if ($consulta->execute()){
+
+        } else {
+
         }
     }
 
