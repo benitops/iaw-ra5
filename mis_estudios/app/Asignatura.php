@@ -2,10 +2,10 @@
 
 class Asignatura
 {
-    public int      $codigo;
-    public string   $nombre;
-    public int      $horas_semana;
-    public string   $profesor;
+    public int          $codigo;
+    public ?string      $nombre;        //Con la ? permitimos que puedan ser NULL.
+    public ?int         $horas_semana;
+    public ?string      $profesor;
 
     public function __construct($codigo, $nombre = NULL, $horas_semana = NULL, $profesor = NULL){
         //Esta función permite definir los atributos cuando se define la clase.
@@ -51,30 +51,30 @@ class Asignatura
 
     public function obtenerUnidades(){
         global $db;
-        $query = "SELECT * FROM mis_estudios.unidades WHERE asignatura = :codigo;";
+        $query = "SELECT * FROM unidades WHERE asignatura = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
 
         //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
         if ($consulta->execute()){
-
+            var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
         } else {
-
+            echo "Ha habido un error al ejecutarse la consulta";
         }
 
     }
 
     public function obtenerInstrumentos(){
         global $db;
-        $query = "SELECT instrumentos.*, unidades.numero, unidades.nombre FROM instrumentos INNER JOIN unidades on unidades.clave = instrumentos.unidad WHERE unidades.asignatura = :codigo;";
+        $query = "SELECT instrumentos.*, unidades.numero, unidades.nombre AS 'unidadesNombre' FROM instrumentos INNER JOIN unidades on unidades.clave = instrumentos.unidad WHERE unidades.asignatura = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
 
         //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
         if ($consulta->execute()){
-
+            var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
         } else {
-
+            echo "Ha habido un error al ejecutarse la consulta";
         }
     }
 
