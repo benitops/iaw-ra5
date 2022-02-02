@@ -16,11 +16,16 @@ try {
 
 // Comprobamos si existe la base de datos
 
-$check = $db->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = {$db_name}");
+$check = $db->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'mis_estudios'");
 if ($check->fetchColumn()){
     // Existe
-
+    $db->query("USE mis_estudios;");
+    $db->exec('SET NAMES utf8'); //Establecemos que usaremos caracteres en UTF-8 para no tener problemas con los caracteres especiales
 } else {
-    // No existe
+    $db->query("");
 
 }
+
+require_once 'Unidades.php';
+require_once 'Instrumentos.php';
+require_once 'Asignatura.php';
