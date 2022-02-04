@@ -2,7 +2,7 @@
 
 class Unidades
 {
-    public int      $clave;         //Auto-increment
+    public int      $clave;         // Auto-increment
     public int      $asignatura;    // Asignatura->codigo;
     public int      $numero;
     public string   $nombre;

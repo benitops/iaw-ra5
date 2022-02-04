@@ -29,3 +29,4 @@ if ($check->fetchColumn()){
 require_once 'Unidades.php';
 require_once 'Instrumentos.php';
 require_once 'Asignatura.php';
+require_once 'Funciones.php';
