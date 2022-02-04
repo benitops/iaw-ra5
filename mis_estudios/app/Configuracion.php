@@ -22,8 +22,10 @@ if ($check->fetchColumn()){
     $db->query("USE mis_estudios;");
     $db->exec('SET NAMES utf8'); //Establecemos que usaremos caracteres en UTF-8 para no tener problemas con los caracteres especiales
 } else {
-    $db->query("");
-
+    //TODO Terminar la creación de tablas si no existen
+    //$db->query("");
+    echo "Error, no existe la base de datos";
+    exit();
 }
 
 require_once 'Unidades.php';
