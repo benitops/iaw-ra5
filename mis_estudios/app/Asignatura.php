@@ -2,13 +2,17 @@
 
 class Asignatura
 {
-    public int         $codigo;
-    public string      $nombre;
-    public int         $horas_semana;
-    public string      $profesor;
+    private int         $codigo;
+    private string      $nombre;
+    private int         $horas_semana;
+    private string      $profesor;
 
-    public function __construct($codigo){
-        //Esta función permite definir los atributos cuando se define la clase.
+
+    /**
+     * @param int $codigo
+     */
+    public function setCodigo(int $codigo): void
+    {
         $this->codigo = $codigo;
     }
 
@@ -88,6 +92,22 @@ class Asignatura
             return true;
         } else {
             // Ha habido un error al actualizar los datos
+            return false;
+        }
+    }
+
+    public function actualizarCodigo($nuevoCodigo){
+        global $db;
+        $query = "UPDATE mis_estudios.asignaturas t
+                    SET t.codigo = :nuevoCodigo
+                    WHERE t.codigo = :codigo; ";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":nuevoCodigo", $nuevoCodigo);
+        $consulta->bindParam(":codigo", $this->codigo);
+
+        if ($consulta->execute()){
+            return true;
+        } else {
             return false;
         }
     }
