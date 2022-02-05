@@ -26,7 +26,7 @@ function getAsignaturas(){
         }
         ?>
         <tr>
-            <td><input type="hidden" name="<?php echo $i; ?>_id" value="" /></td>
+            <td></td>
             <td><input type="text" name="<?php echo $i; ?>_codigo" value="" /></td>
             <td><input type="text" name="<?php echo $i; ?>_nombre" value="" /></td>
             <td><input type="number" name="<?php echo $i; ?>_horas_semana" value="" /></td>
