@@ -197,9 +197,9 @@ class Asignatura
             ?>
             <tr>
                 <td></td>
-                <td><input type="text" name="asignatura[<?php echo $i; ?>][numero]" value="" /></td>
-                <td><input type="text" name="asignatura[<?php echo $i; ?>][nombre]" value="" /></td>
-                <td><input type="number" name="asignatura[<?php echo $i; ?>][porcentaje]" value="" /></td>
+                <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
+                <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
+                <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
             </tr>
             <?php
         } else {

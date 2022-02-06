@@ -1,6 +1,6 @@
 <?php
 
-class Unidades
+class Unidad
 {
     public int      $clave;         // Auto-increment
     public int      $asignatura;    // Asignatura->codigo;
@@ -52,6 +52,19 @@ class Unidades
         $this->porcentaje = $porcentaje;
     }
 
+    public function validarUnidad($clave){
+        global $db;
+        $query = "SELECT clave FROM unidades WHERE clave = :clave;";
+        $con = $db->prepare($query);
+        $con->bindParam(":clave", $clave);
+        $con->execute();
+        if ($con->rowCount() == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function crear(){
         global $db;
         $query = "INSERT INTO mis_estudios.unidades (asignatura, numero, nombre, porcentaje) VALUES (:asignatura, :numero, :nombre, :porcentaje);";
@@ -75,5 +88,32 @@ class Unidades
         $query = "DELETE FROM mis_estudios.unidades WHERE clave = :clave;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':clave', $this->clave);
+
+        if($consulta->execute()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function actualizar(){
+        global $db;
+        $query = "UPDATE mis_estudios.unidades t
+                    SET t.numero     = :numero,
+                        t.nombre     = :nombre,
+                        t.porcentaje = :porcentaje
+                    WHERE t.clave = :clave;
+                    ";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":numero", $this->numero);
+        $consulta->bindParam(":nombre", $this->nombre);
+        $consulta->bindParam(":porcentaje", $this->porcentaje);
+        $consulta->bindParam(":clave", $this->clave);
+
+        if ($consulta->execute()){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
