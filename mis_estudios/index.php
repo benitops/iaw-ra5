@@ -19,6 +19,12 @@ if(isset($_POST['asignatura'])){
         }
     }
 }
+if(isset($_GET['asignatura']) && $_GET['operacion'] == 'eliminar'){
+    $a = new Asignatura();
+    $a->setCodigo($_GET['asignatura']);
+    $a->eliminar();
+    unset($a);
+}
 
 ?>
 <html lang="es">

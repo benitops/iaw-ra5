@@ -16,9 +16,9 @@ function getAsignaturas(){
                 <td><input type="text" name="asignatura[<?php echo $i; ?>][nombre]" value="<?php echo $asignatura['nombre'] ?>" /></td>
                 <td><input type="number" name="asignatura[<?php echo $i; ?>][horas_semana]" value="<?php echo $asignatura['horas_semana'] ?>" /></td>
                 <td><input type="profesor" name="asignatura[<?php echo $i; ?>][profesor]" value="<?php echo $asignatura['profesor'] ?>" /></td>
-                <td><a href="?operacion=eliminar&asignatura=<?php ?>"><img src="img/remove32.png"></a></td>
-                <td><a href="unidades.php?asignatura=<?php ?>"><img src="img/tarta.png"></a></td>
-                <td><a href="instrumentos.php?asignatura=<?php ?>"><img src="img/smile.png"></a></td>
+                <td><a href="?operacion=eliminar&asignatura=<?php echo $asignatura['codigo'] ?>"><img src="img/remove32.png"></a></td>
+                <td><a href="unidades.php?asignatura=<?php echo $asignatura['codigo'] ?>"><img src="img/tarta.png"></a></td>
+                <td><a href="instrumentos.php?asignatura=<?php echo $asignatura['codigo'] ?>"><img src="img/smile.png"></a></td>
                 <td><a href="expediente.php"><img src="img/birrete.png"></a></td>
             </tr>
             <?php
