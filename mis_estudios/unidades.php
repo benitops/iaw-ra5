@@ -1,5 +1,12 @@
 <?php
 require_once 'app/Configuracion.php';
+session_start();
+
+if((isset($_GET['asignatura']) && is_numeric($_GET['asignatura']))){
+    $_SESSION['asignatura'] = $_GET['asignatura'];
+} else if (!isset($_SESSION['asignatura'])){
+    header('Location: index.php');
+}
 
 if(isset($_GET['clave']) && $_GET['operacion'] == 'eliminar'){
     $u = new Unidad();
@@ -8,12 +15,8 @@ if(isset($_GET['clave']) && $_GET['operacion'] == 'eliminar'){
     unset($u);
 }
 
-if(!isset($_GET['asignatura']) || !is_numeric($_GET['asignatura'])){
-    header('Location: index.php');
-}
-
 $asignatura = new Asignatura();
-$asignatura->setCodigo($_GET['asignatura']);
+$asignatura->setCodigo($_SESSION['asignatura']);
 $asignatura->obtenerDetalles();
 
 if(isset($_POST['unidades'])){
