@@ -32,7 +32,7 @@ if(isset($_POST['unidades'])){
             if(!$unidad->actualizar()){
                 echo "Error al actualizar la unidad";
             }
-        } else {
+        } else if (!empty($unidad->numero) && !empty($unidad->nombre) && !empty($unidad->porcentaje)){
             //La unidad todavía no existe
             if(!$unidad->crear()){
                 echo "Error al crear la unidad";
