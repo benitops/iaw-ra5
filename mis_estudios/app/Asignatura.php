@@ -9,11 +9,11 @@ class Asignatura
 
 
     /**
-     * @param int $codigo
+     * @param int|string $codigo
      */
-    public function setCodigo(int $codigo): void
+    public function setCodigo(mixed $codigo): void
     {
-        $this->codigo = $codigo;
+        $this->codigo = (int)$codigo;
     }
 
     /**
@@ -25,11 +25,11 @@ class Asignatura
     }
 
     /**
-     * @param int $horas_semana
+     * @param string|int $horas_semana
      */
-    public function setHorasSemana(int $horas_semana): void
+    public function setHorasSemana(mixed $horas_semana): void
     {
-        $this->horas_semana = $horas_semana;
+        $this->horas_semana = (int)$horas_semana;
     }
 
     /**
@@ -40,21 +40,42 @@ class Asignatura
         $this->profesor = $profesor;
     }
 
-    public function crear(){
-        // Usamos la variable $db que hemos definido en el archivo de configuración, la cual contiene la conexión a la base de datos.
+    public function validarCodigo($codigo){
         global $db;
-        $query = "INSERT INTO mis_estudios.asignaturas (`codigo`, `nombre`, `horas_semana`, `profesor`) VALUES (:codigo, :nombre, :horas_semana, :profesor);";
-        $consulta = $db->prepare($query);
-        $consulta->bindParam(':codigo', $this->codigo);
-        $consulta->bindParam(':nombre', $this->nombre);
-        $consulta->bindParam(':horas_semana', $this->horas_semana);
-        $consulta->bindParam(':profesor', $this->profesor);
-
-        if($consulta->execute()){
-            // Si se ejecuta correctamente, devuelve TRUE
+        $query = "SELECT nombre FROM ASIGNATURAS WHERE CODIGO = :codigo;";
+        $con = $db->prepare($query);
+        $con->bindParam(":codigo", $codigo);
+        $con->execute();
+        if ($con->rowCount() == 0){
             return true;
         } else {
-            // Si no se ejecuta correctamente, devuelve FALSE
+            return false;
+        }
+    }
+
+    public function crear()
+    {
+        // Usamos la variable $db que hemos definido en el archivo de configuración, la cual contiene la conexión a la base de datos.
+
+        if ($this->validarCodigo($this->codigo)) {
+
+            global $db;
+            $query = "INSERT INTO mis_estudios.asignaturas (`codigo`, `nombre`, `horas_semana`, `profesor`) VALUES (:codigo, :nombre, :horas_semana, :profesor);";
+            $consulta = $db->prepare($query);
+            $consulta->bindParam(':codigo', $this->codigo);
+            $consulta->bindParam(':nombre', $this->nombre);
+            $consulta->bindParam(':horas_semana', $this->horas_semana);
+            $consulta->bindParam(':profesor', $this->profesor);
+
+            if ($consulta->execute()) {
+                // Si se ejecuta correctamente, devuelve TRUE
+                return true;
+            } else {
+                // Si no se ejecuta correctamente, devuelve FALSE
+                return false;
+            }
+
+        } else {
             return false;
         }
     }
@@ -74,7 +95,8 @@ class Asignatura
         }
     }
 
-    public function actualizar(){
+    public function actualizar(): bool
+    {
         global $db;
         $query = "UPDATE mis_estudios.asignaturas t
                     SET t.nombre       = :nombre,
@@ -87,7 +109,7 @@ class Asignatura
         $consulta->bindParam(":horas_semana", $this->horas_semana);
         $consulta->bindParam(":profesor", $this->profesor);
 
-        if ($consulta->execute()){
+        if ($consulta->execute()) {
             // Se ha actualizado correctamente
             return true;
         } else {
@@ -96,17 +118,22 @@ class Asignatura
         }
     }
 
-    public function actualizarCodigo($nuevoCodigo){
-        global $db;
-        $query = "UPDATE mis_estudios.asignaturas t
+    public function actualizarCodigo($nuevoCodigo): bool
+    {
+        if ($this->validarCodigo($nuevoCodigo)){
+            global $db;
+            $query = "UPDATE mis_estudios.asignaturas t
                     SET t.codigo = :nuevoCodigo
                     WHERE t.codigo = :codigo; ";
-        $consulta = $db->prepare($query);
-        $consulta->bindParam(":nuevoCodigo", $nuevoCodigo);
-        $consulta->bindParam(":codigo", $this->codigo);
+            $consulta = $db->prepare($query);
+            $consulta->bindParam(":nuevoCodigo", $nuevoCodigo);
+            $consulta->bindParam(":codigo", $this->codigo);
 
-        if ($consulta->execute()){
-            return true;
+            if ($consulta->execute()){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

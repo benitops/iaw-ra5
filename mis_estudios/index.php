@@ -1,36 +1,24 @@
 <?php
 require_once 'app/Configuracion.php';
 
-if (isset($_POST)){
-    for ($i = 1; $i <= substr(array_key_last($_POST), 0, 1); $i++ ){
-        $a = new Asignatura();
-        $a->setNombre($_POST[$i.'_nombre']);
-        $a->setHorasSemana(intval($_POST[$i.'_horas_semana']));
-        $a->setProfesor($_POST[$i.'_profesor']);
-
-        if (!isset($_POST[$i.'_id']) && $_POST[$i.'_codigo'] !== 0){
-            $a->setCodigo(intval($_POST[$i.'_codigo']));
-            if (!$a->crear()){
-                echo "Error al actualizar los datos";
-                exit();
+if(isset($_POST['asignatura'])){
+    foreach ($_POST['asignatura'] as $a){
+        $asignatura = new Asignatura();
+        $asignatura->setNombre($a['nombre']);
+        $asignatura->setProfesor($a['profesor']);
+        $asignatura->setHorasSemana($a['horas_semana']);
+        if(isset($a['id'])){
+            $asignatura->setCodigo($a['id']);
+            $asignatura->actualizar();
+            if ($a['id'] !== $a['codigo']){
+                $asignatura->actualizarCodigo($a['codigo']);
             }
-        } else {
-            $a->setCodigo(intval($_POST[$i.'_id']));
-            if ($a->actualizar()){
-                if ($_POST[$i.'_id'] !== $_POST[$i.'_codigo']){
-                    if(!$a->actualizarCodigo(intval($_POST[$i.'_codigo']))){
-                        echo "Error al actualizar los datos.";
-                        exit();
-                    }
-                }
-            } else {
-                echo "Error al actualizar los datos";
-                exit();
-            }
+        } else if (strlen($a['codigo'] >= 1)){
+            $asignatura->setCodigo($a['codigo']);
+            $asignatura->crear();
         }
     }
 }
-
 
 ?>
 <html lang="es">
