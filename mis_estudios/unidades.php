@@ -1,8 +1,17 @@
 <?php
 require_once 'app/Configuracion.php';
+
+if(isset($_GET['clave']) && $_GET['operacion'] == 'eliminar'){
+    $u = new Unidad();
+    $u->setClave($_GET['clave']);
+    $u->eliminar();
+    unset($u);
+}
+
 if(!isset($_GET['asignatura']) || !is_numeric($_GET['asignatura'])){
     header('Location: index.php');
 }
+
 $asignatura = new Asignatura();
 $asignatura->setCodigo($_GET['asignatura']);
 $asignatura->obtenerDetalles();
@@ -10,16 +19,25 @@ $asignatura->obtenerDetalles();
 if(isset($_POST['unidades'])){
     foreach ($_POST['unidades'] as $u){
         $unidad = new Unidad();
+        $unidad->setNombre($u['nombre']);
+        $unidad->setPorcentaje($u['porcentaje']);
+        $unidad->setNumero($u['numero']);
+        $unidad->setAsignatura($asignatura->obtenerCodigo());
+        if(isset($u['clave'])){
+            //La unidad ya existe
+            $unidad->setClave($u['clave']);
+            if(!$unidad->actualizar()){
+                echo "Error al actualizar la unidad";
+            }
+        } else {
+            //La unidad todavía no existe
+            if(!$unidad->crear()){
+                echo "Error al crear la unidad";
+            }
+        }
     }
-
 }
 
-if(isset($_GET['asignatura']) && $_GET['operacion'] == 'eliminar'){
-    $a = new Asignatura();
-    $a->setCodigo($_GET['asignatura']);
-    $a->eliminar();
-    unset($a);
-}
 
 ?>
 <html lang="es">

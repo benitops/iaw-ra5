@@ -8,32 +8,28 @@ class Unidad
     public string   $nombre;
     public int      $porcentaje;
 
-    public function __construct($clave = NULL){
-        $this->clave = $clave;
-    }
-
     /**
-     * @param int|mixed|null $clave
+     * @param int|mixed $clave
      */
     public function setClave(mixed $clave): void
     {
-        $this->clave = $clave;
+        $this->clave = (int)$clave;
     }
 
     /**
-     * @param int $asignatura
+     * @param int|string $asignatura
      */
-    public function setAsignatura(int $asignatura): void
+    public function setAsignatura(mixed $asignatura): void
     {
-        $this->asignatura = $asignatura;
+        $this->asignatura = (int)$asignatura;
     }
 
     /**
-     * @param int $numero
+     * @param int|string $numero
      */
-    public function setNumero(int $numero): void
+    public function setNumero(mixed $numero): void
     {
-        $this->numero = $numero;
+        $this->numero = (int)$numero;
     }
 
     /**
@@ -45,24 +41,11 @@ class Unidad
     }
 
     /**
-     * @param int $porcentaje
+     * @param int|string $porcentaje
      */
-    public function setPorcentaje(int $porcentaje): void
+    public function setPorcentaje(mixed $porcentaje): void
     {
-        $this->porcentaje = $porcentaje;
-    }
-
-    public function validarUnidad($clave){
-        global $db;
-        $query = "SELECT clave FROM unidades WHERE clave = :clave;";
-        $con = $db->prepare($query);
-        $con->bindParam(":clave", $clave);
-        $con->execute();
-        if ($con->rowCount() == 0){
-            return true;
-        } else {
-            return false;
-        }
+        $this->porcentaje = (int)$porcentaje;
     }
 
     public function crear(){

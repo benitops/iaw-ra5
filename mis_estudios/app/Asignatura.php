@@ -186,9 +186,9 @@ class Asignatura
                 ?>
                 <tr>
                     <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $unidad['clave'] ?>" /></td>
-                    <td><input type="text" name="unidades[<?php echo $i; ?>][num]" value="<?php echo $unidad['numero'] ?>" /></td>
+                    <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="<?php echo $unidad['numero'] ?>" /></td>
                     <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="<?php echo $unidad['nombre'] ?>" /></td>
-                    <td><input type="number" name="unidades[<?php echo $i; ?>][peso]" value="<?php echo $unidad['porcentaje'] ?>" /></td>
+                    <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $unidad['porcentaje'] ?>" /></td>
                     <td><a href="?operacion=eliminar&clave=<?php echo $unidad['clave'] ?>"><img src="img/remove32.png"></a></td>
                 </tr>
                 <?php
