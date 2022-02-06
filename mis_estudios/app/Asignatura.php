@@ -17,11 +17,27 @@ class Asignatura
     }
 
     /**
+     * @return int
+     */
+    public function obtenerCodigo(): int
+    {
+        return $this->codigo;
+    }
+
+    /**
      * @param string $nombre
      */
     public function setNombre(string $nombre): void
     {
         $this->nombre = $nombre;
+    }
+
+    /**
+     * @return string
+     */
+    public function obtenerNombre(): string
+    {
+        return $this->nombre;
     }
 
     /**
@@ -146,7 +162,7 @@ class Asignatura
         $consulta->bindParam(':codigo', $this->codigo);
 
         if ($consulta->execute()){
-            $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            $datos = $consulta->fetch(PDO::FETCH_ASSOC);
             $this->nombre = $datos['nombre'];
             $this->horas_semana = $datos['horas_semana'];
             $this->profesor = $datos['profesor'];
@@ -165,7 +181,27 @@ class Asignatura
 
         //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
         if ($consulta->execute()){
-            var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
+            $i = 1;
+            foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) AS $unidad){
+                ?>
+                <tr>
+                    <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $unidad['clave'] ?>" /></td>
+                    <td><input type="text" name="unidades[<?php echo $i; ?>][num]" value="<?php echo $unidad['numero'] ?>" /></td>
+                    <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="<?php echo $unidad['nombre'] ?>" /></td>
+                    <td><input type="number" name="unidades[<?php echo $i; ?>][peso]" value="<?php echo $unidad['porcentaje'] ?>" /></td>
+                    <td><a href="?operacion=eliminar&clave=<?php echo $unidad['clave'] ?>"><img src="img/remove32.png"></a></td>
+                </tr>
+                <?php
+                $i++;
+            }
+            ?>
+            <tr>
+                <td></td>
+                <td><input type="text" name="asignatura[<?php echo $i; ?>][numero]" value="" /></td>
+                <td><input type="text" name="asignatura[<?php echo $i; ?>][nombre]" value="" /></td>
+                <td><input type="number" name="asignatura[<?php echo $i; ?>][porcentaje]" value="" /></td>
+            </tr>
+            <?php
         } else {
             echo "Ha habido un error al ejecutarse la consulta";
         }
