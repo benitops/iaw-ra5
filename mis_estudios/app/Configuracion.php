@@ -34,6 +34,6 @@ if ($check->fetchColumn()){
 }
 
 require_once 'Unidad.php';
-require_once 'Instrumentos.php';
+require_once 'Instrumento.php';
 require_once 'Asignatura.php';
 require_once 'Funciones.php';
