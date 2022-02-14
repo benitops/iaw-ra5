@@ -1,8 +1,13 @@
 <?php
 // DB CREDENCIALES DE USUARIO.
+//$db_host = "localhost";
+//$db_user = "root";
+//$db_pass = "";
+//$db_name = "mis_estudios";
+// DB PLESK
 $db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
+$db_user = "ra5";
+$db_pass = "28U?3ozf";
 $db_name = "mis_estudios";
 
 // Ahora, establecemos la conexión.
