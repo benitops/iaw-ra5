@@ -58,7 +58,7 @@ class Asignatura
 
     public function validarCodigo($codigo){
         global $db;
-        $query = "SELECT nombre FROM ASIGNATURAS WHERE CODIGO = :codigo;";
+        $query = "SELECT nombre FROM asignaturas WHERE CODIGO = :codigo;";
         $con = $db->prepare($query);
         $con->bindParam(":codigo", $codigo);
         $con->execute();

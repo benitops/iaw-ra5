@@ -7,7 +7,7 @@
 // DB PLESK
 $db_host = "localhost";
 $db_user = "ra5";
-$db_pass = "28U?3ozf";
+$db_pass = "w62cC8p!";
 $db_name = "mis_estudios";
 
 // Ahora, establecemos la conexión.
