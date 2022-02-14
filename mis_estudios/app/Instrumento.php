@@ -1,6 +1,6 @@
 <?php
 
-class Instrumentos
+class Instrumento
 {
     public int      $clave;     // Auto-increment
     public int      $unidad;    // Unidades->clave;

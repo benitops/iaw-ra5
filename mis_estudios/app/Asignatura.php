@@ -218,7 +218,32 @@ class Asignatura
 
         //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
         if ($consulta->execute()){
-            var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
+            //var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
+            if ($consulta->execute()){
+                $i = 1;
+                foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) AS $instrumento){
+                    ?>
+                    <tr>
+                        <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
+                        <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="<?php echo $instrumento['numero'] ?>" /></td>
+                        <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
+                        <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $instrumento['porcentaje'] ?>" /></td>
+                        <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
+                    </tr>
+                    <?php
+                    $i++;
+                }
+                ?>
+                <tr>
+                    <td></td>
+                    <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
+                    <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
+                    <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
+                </tr>
+                <?php
+            } else {
+                echo "Ha habido un error al ejecutarse la consulta";
+            }
         } else {
             echo "Ha habido un error al ejecutarse la consulta";
         }
