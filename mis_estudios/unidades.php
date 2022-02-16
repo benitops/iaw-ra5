@@ -55,6 +55,9 @@ if(isset($_POST['unidades'])){
 <body>
 <div class="encabezado centrado">
     <h1>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h1>
+    <?php var_dump($asignatura);
+    exit();
+    ?>
 </div>
 <div class="contenido">
     <form method="post" action="">
