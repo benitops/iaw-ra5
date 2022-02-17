@@ -6,7 +6,7 @@ class Instrumento
     public int      $unidad;    // Unidades->clave;
     public string   $nombre;
     public int      $peso;
-    public float    $calificacion;
+    public ?float   $calificacion;
 
     /**
      * @param int $clave
@@ -41,9 +41,9 @@ class Instrumento
     }
 
     /**
-     * @param float $calificacion
+     * @param float|null $calificacion
      */
-    public function setCalificacion(float $calificacion): void
+    public function setCalificacion(?float $calificacion): void
     {
         $this->calificacion = $calificacion;
     }

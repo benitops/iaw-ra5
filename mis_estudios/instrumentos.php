@@ -22,7 +22,7 @@ $asignatura->obtenerDetalles();
 if(isset($_POST['instrumentos'])){
     foreach ($_POST['instrumentos'] as $i){
 
-        if (!empty($i['unidad']) && !empty($i['nombre']) && !empty($i['peso']) && !empty($i['calificacion'])){
+        if (!empty($i['unidad']) && !empty($i['nombre']) && !empty($i['peso'])){
             $ins = new Instrumento();
             $ins->setUnidad($i['unidad']);
             $ins->setNombre($i['nombre']);
