@@ -180,6 +180,7 @@ class Asignatura
         $consulta->bindParam(':codigo', $this->codigo);
         $consulta->execute();
         $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($datos);
         return $datos;
     }
 
