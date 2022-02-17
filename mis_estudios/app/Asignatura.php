@@ -238,7 +238,7 @@ class Asignatura
                     <td>
                         <select name="instrumento[<?php echo $i; ?>][unidad]">
                             <?php foreach ($this->obtenerUnidades() as $u){ ?>
-                                <option value="Option A">Option A</option>
+                                <option value="<?php echo $u['clave']; ?>"><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
                             <?php } ?>
                         </select>
                     </td>
