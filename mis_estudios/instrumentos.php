@@ -27,7 +27,12 @@ if(isset($_POST['instrumentos'])){
             $ins->setUnidad($i['unidad']);
             $ins->setNombre($i['nombre']);
             $ins->setPeso($i['peso']);
-            $ins->setCalificacion($i['calificacion']);
+
+            if(!strlen($i['calificacion'])){
+                $ins->setCalificacion(NULL);
+            } else {
+                $ins->setCalificacion($i['calificacion']);
+            }
 
             if(isset($i['clave'])){
                 $ins->setClave($i['clave']);
