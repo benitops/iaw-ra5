@@ -184,6 +184,7 @@ class Asignatura
 
     public function mostrarUnidades(){
         $unidades = $this->obtenerUnidades();
+        var_dump($unidades);
         if ($unidades){
             $i = 1;
             foreach ($unidades AS $unidad){
