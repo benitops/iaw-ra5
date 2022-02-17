@@ -20,7 +20,8 @@ $asignatura->setCodigo($_SESSION['asignatura']);
 $asignatura->obtenerDetalles();
 
 if(isset($_POST['instrumentos'])){
-    foreach ($_POST['instrumentos'] as $i ){
+    var_dump($_POST);
+    foreach ($_POST['instrumentos'] as $i){
 
         if (!empty($i['unidad']) && !empty($i['nombre']) && !empty($i['peso']) && !empty($i['calificacion'])){
             $ins = new Instrumento();
