@@ -189,8 +189,8 @@ class Asignatura
 
     public function mostrarUnidades(){
         $unidades = $this->obtenerUnidades();
+        $i = 1;
         if ($unidades){
-            $i = 1;
             foreach ($unidades AS $unidad){
                 ?>
                 <tr>
@@ -200,20 +200,16 @@ class Asignatura
                     <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $unidad['porcentaje'] ?>" /></td>
                     <td><a href="?operacion=eliminar&clave=<?php echo $unidad['clave'] ?>"><img src="img/remove32.png"></a></td>
                 </tr>
-                <?php
-                $i++;
+                <?php $i++;
             }
-            ?>
-            <tr>
-                <td></td>
-                <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
-                <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
-                <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
-            </tr>
-            <?php
-        } else {
-            echo "Ha habido un error al ejecutarse la consulta";
-        }
+        }  ?>
+        <tr>
+            <td></td>
+            <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
+            <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
+            <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
+        </tr>
+        <?php
     }
 
     public function obtenerInstrumentos(): bool|array
@@ -234,31 +230,25 @@ class Asignatura
 
     public function mostrarInstrumentos(){
         $instrumentos = $this->obtenerInstrumentos();
-            if ($instrumentos){
-                $i = 1;
-                foreach ($instrumentos AS $instrumento){
-                    ?>
-                    <tr>
-                        <td><input type="hidden" name="instrumento[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
-                        <td><input type="text" name="instrumento[<?php echo $i; ?>][numero]" value="<?php echo $instrumento['numero'] ?>" /></td>
-                        <td><input type="text" name="instrumento[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
-                        <td><input type="number" name="instrumento[<?php echo $i; ?>][porcentaje]" value="<?php echo $instrumento['porcentaje'] ?>" /></td>
-                        <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
-                    </tr>
-                    <?php
-                    $i++;
-                }
-                ?>
+        $i = 1;
+        if ($instrumentos){
+            foreach ($instrumentos AS $instrumento){ ?>
                 <tr>
-                    <td></td>
-                    <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
-                    <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
-                    <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
+                    <td><input type="hidden" name="instrumento[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
+                    <td><input type="text" name="instrumento[<?php echo $i; ?>][numero]" value="<?php echo $instrumento['numero'] ?>" /></td>
+                    <td><input type="text" name="instrumento[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
+                    <td><input type="number" name="instrumento[<?php echo $i; ?>][porcentaje]" value="<?php echo $instrumento['porcentaje'] ?>" /></td>
+                    <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
                 </tr>
-                <?php
-            } else {
-                echo "Ha habido un error al ejecutarse la consulta";
+                <?php $i++;
             }
+        } ?>
+        <tr>
+            <td></td>
+            <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
+            <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
+            <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
+        </tr>
+        <?php
     }
-
 }
