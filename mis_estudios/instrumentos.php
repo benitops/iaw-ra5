@@ -1,5 +1,4 @@
 <?php
-
 require_once 'app/Configuracion.php';
 session_start();
 
@@ -20,6 +19,26 @@ $asignatura = new Asignatura();
 $asignatura->setCodigo($_SESSION['asignatura']);
 $asignatura->obtenerDetalles();
 
+if(isset($_POST['instrumentos'])){
+    foreach ($_POST['instrumentos'] as $i ){
+        $ins = new Instrumento();
+        $ins->setUnidad($i['unidad']);
+        $ins->setNombre($i['nombre']);
+        $ins->setPeso($i['peso']);
+        $ins->setCalificacion($i['calificacion']);
+        if(isset($ins['clave'])){
+            $ins->setClave($i['clave']);
+            if(!$ins->actualizar()){
+                echo "Error al actualizar el instrumento";
+                exit();
+            }
+        } else if (!empty($ins->unidad) && !empty($ins->nombre) && !empty($ins->peso) && !empty($ins->calificacion)){
+            if (!$ins->crear()){
+                echo "Error al crear el instrumento";
+            }
+        }
+    }
+}
 ?>
 <html lang="es">
 <head>
