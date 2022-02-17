@@ -51,8 +51,9 @@ class Instrumento
     public function crear(){
         global $db;
         $query = "INSERT INTO mis_estudios.instrumentos (unidad, nombre, peso, calificacion) 
-                    VALUES (null, :nombre, :peso, :calificacion);";
+                    VALUES (:unidad, :nombre, :peso, :calificacion);";
         $consulta = $db->prepare($query);
+        $consulta->bindParam(":unidad", $this->unidad);
         $consulta->bindParam(":nombre", $this->nombre);
         $consulta->bindParam(":peso", $this->peso);
         $consulta->bindParam(":calificacion", $this->calificacion);
