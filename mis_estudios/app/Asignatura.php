@@ -237,9 +237,13 @@ class Asignatura
                     <td><input type="hidden" name="instrumento[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
                     <td>
                         <select name="instrumento[<?php echo $i; ?>][unidad]">
-                            <?php foreach ($this->obtenerUnidades() as $u){ ?>
-                                <option value="<?php echo $u['clave']; ?>"><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
-                            <?php } ?>
+                            <?php foreach ($this->obtenerUnidades() as $u){
+                                if ($u['numero'] == $instrumento['clave']) { ?>
+                                    <option value="<?php echo $u['clave']; ?>" selected><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $u['clave']; ?>"><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
+                                <?php }
+                            } ?>
                         </select>
                     </td>
                     <td><input type="text" name="instrumento[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
