@@ -179,14 +179,11 @@ class Asignatura
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
         $consulta->execute();
-        $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($datos);
-        return $datos;
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function mostrarUnidades(){
         $unidades = $this->obtenerUnidades();
-        var_dump($unidades);
         if ($unidades){
             $i = 1;
             foreach ($unidades AS $unidad){
