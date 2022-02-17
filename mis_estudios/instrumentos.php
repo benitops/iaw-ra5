@@ -26,7 +26,7 @@ if(isset($_POST['instrumentos'])){
         $ins->setNombre($i['nombre']);
         $ins->setPeso($i['peso']);
         $ins->setCalificacion($i['calificacion']);
-        if(isset($i['clave'])){
+        if(isset($ins['clave'])){
             $ins->setClave($i['clave']);
             if(!$ins->actualizar()){
                 echo "Error al actualizar el instrumento";
