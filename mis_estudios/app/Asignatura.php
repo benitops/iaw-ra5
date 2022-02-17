@@ -234,9 +234,9 @@ class Asignatura
         if ($instrumentos){
             foreach ($instrumentos AS $instrumento){ ?>
                 <tr>
-                    <td><input type="hidden" name="instrumento[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
+                    <td><input type="hidden" name="instrumentos[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
                     <td>
-                        <select name="instrumento[<?php echo $i; ?>][unidad]">
+                        <select name="instrumentos[<?php echo $i; ?>][unidad]">
                             <?php foreach ($this->obtenerUnidades() as $u){
                                 if ($instrumento['unidad'] == $u['numero']) { ?>
                                     <option value="<?php echo $u['clave']; ?>" selected><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
@@ -246,9 +246,9 @@ class Asignatura
                             } ?>
                         </select>
                     </td>
-                    <td><input type="text" name="instrumento[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
-                    <td><input type="text" name="instrumento[<?php echo $i; ?>][peso]" value="<?php echo $instrumento['peso'] ?>" /></td>
-                    <td><input type="number" name="instrumento[<?php echo $i; ?>][calificacion]" value="<?php echo $instrumento['calificacion'] ?>" /></td>
+                    <td><input type="text" name="instrumentos[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
+                    <td><input type="text" name="instrumentos[<?php echo $i; ?>][peso]" value="<?php echo $instrumento['peso'] ?>" /></td>
+                    <td><input type="number" name="instrumentos[<?php echo $i; ?>][calificacion]" value="<?php echo $instrumento['calificacion'] ?>" /></td>
                     <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
                 </tr>
                 <?php $i++;
@@ -257,16 +257,16 @@ class Asignatura
         <tr>
             <td></td>
             <td>
-                <select name="instrumento[<?php echo $i; ?>][unidad]">
+                <select name="instrumentos[<?php echo $i; ?>][unidad]">
                     <option selected disabled>Selecciona unidad</option>
                     <?php foreach ($this->obtenerUnidades() as $u){ ?>
                     <option value="<?php echo $u['clave']; ?>"><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
                     <?php } ?>
                 </select>
             </td>
-            <td><input type="text" name="instrumento[<?php echo $i; ?>][nombre]" value="" /></td>
-            <td><input type="number" name="instrumento[<?php echo $i; ?>][porcentaje]" value="" /></td>
-            <td><input type="number" name="instrumento[<?php echo $i; ?>][calificacion]" value="" /></td>
+            <td><input type="text" name="instrumentos[<?php echo $i; ?>][nombre]" value="" /></td>
+            <td><input type="number" name="instrumentos[<?php echo $i; ?>][peso]" value="" /></td>
+            <td><input type="number" name="instrumentos[<?php echo $i; ?>][calificacion]" value="" /></td>
 
         </tr>
         <?php
