@@ -179,7 +179,8 @@ class Asignatura
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
         $consulta->execute();
-        return var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
+        $datos = $consulta->fetchAll(PDO::FETCH_ASSOC);
+        return $datos;
     }
 
     public function mostrarUnidades(){
