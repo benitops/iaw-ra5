@@ -178,11 +178,15 @@ class Asignatura
         $query = "SELECT * FROM unidades WHERE asignatura = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
+        $consulta->execute();
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-        //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
-        if ($consulta->execute()){
+    public function mostrarUnidades(){
+        $unidades = $this->obtenerUnidades();
+        if ($unidades){
             $i = 1;
-            foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) AS $unidad){
+            foreach ($unidades AS $unidad){
                 ?>
                 <tr>
                     <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $unidad['clave'] ?>" /></td>
@@ -205,7 +209,6 @@ class Asignatura
         } else {
             echo "Ha habido un error al ejecutarse la consulta";
         }
-
     }
 
     public function obtenerInstrumentos(){

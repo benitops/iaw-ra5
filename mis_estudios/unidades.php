@@ -65,7 +65,7 @@ if(isset($_POST['unidades'])){
                 <th>Nombre</th>
                 <th>Peso</th>
             </tr>
-            <?php $asignatura->obtenerUnidades(); ?>
+            <?php $asignatura->mostrarUnidades(); ?>
         </table>
         <input type="submit" value="Guardar cambios"/>
     </form>
