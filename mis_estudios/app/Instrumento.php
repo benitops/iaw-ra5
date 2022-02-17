@@ -43,7 +43,7 @@ class Instrumento
     /**
      * @param float|null $calificacion
      */
-    public function setCalificacion(?float $calificacion): void
+    public function setCalificacion(mixed $calificacion): void
     {
         $this->calificacion = $calificacion;
     }
