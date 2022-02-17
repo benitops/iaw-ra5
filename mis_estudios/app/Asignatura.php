@@ -173,7 +173,8 @@ class Asignatura
 
     }
 
-    public function obtenerUnidades(){
+    public function obtenerUnidades(): bool|array
+    {
         global $db;
         $query = "SELECT * FROM unidades WHERE asignatura = :codigo;";
         $consulta = $db->prepare($query);
