@@ -80,7 +80,6 @@ class Instrumento
         $consulta->bindParam(":peso", $this->peso);
         $consulta->bindParam(":calificacion", $this->calificacion);
         $consulta->bindParam(":clave", $this->clave);
-        var_dump($this->calificacion);
         if ($consulta->execute()){
             return true;
         } else {
