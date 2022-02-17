@@ -238,7 +238,7 @@ class Asignatura
                     <td>
                         <select name="instrumentos[<?php echo $i; ?>][unidad]">
                             <?php foreach ($this->obtenerUnidades() as $u){
-                                if ($instrumento['unidad'] == $u['numero']) { ?>
+                                if ($instrumento['unidad'] == $u['clave']) { ?>
                                     <option value="<?php echo $u['clave']; ?>" selected><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
                                     <?php } else { ?>
                                     <option value="<?php echo $u['clave']; ?>"><?php echo $u['numero'].'. '.$u['nombre']; ?></option>

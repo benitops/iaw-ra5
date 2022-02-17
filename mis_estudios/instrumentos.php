@@ -25,7 +25,6 @@ if(isset($_POST['instrumentos'])){
         if (!empty($i['unidad']) && !empty($i['nombre']) && !empty($i['peso']) && !empty($i['calificacion'])){
             $ins = new Instrumento();
             $ins->setUnidad($i['unidad']);
-            print_r($ins->unidad);
             $ins->setNombre($i['nombre']);
             $ins->setPeso($i['peso']);
             $ins->setCalificacion($i['calificacion']);
