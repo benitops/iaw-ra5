@@ -21,22 +21,25 @@ $asignatura->obtenerDetalles();
 
 if(isset($_POST['instrumentos'])){
     foreach ($_POST['instrumentos'] as $i ){
-        $ins = new Instrumento();
-        $ins->setUnidad($i['unidad']);
-        $ins->setNombre($i['nombre']);
-        $ins->setPeso($i['peso']);
-        $ins->setCalificacion($i['calificacion']);
 
-        var_dump($ins);
-        if(isset($i['clave'])){
-            $ins->setClave($i['clave']);
-            if(!$ins->actualizar()){
-                echo "Error al actualizar el instrumento";
-                exit();
-            }
-        } else if (!empty($ins->unidad) && !empty($ins->nombre) && !empty($ins->peso) && !empty($ins->calificacion)){
-            if (!$ins->crear()){
-                echo "Error al crear el instrumento";
+        if (!empty($i['unidad']) && !empty($i['nombre']) && !empty($i['peso']) && !empty($i['calificacion'])){
+            $ins = new Instrumento();
+            $ins->setUnidad($i['unidad']);
+            $ins->setNombre($i['nombre']);
+            $ins->setPeso($i['peso']);
+            $ins->setCalificacion($i['calificacion']);
+
+            if(isset($i['clave'])){
+                $ins->setClave($i['clave']);
+                if(!$ins->actualizar()){
+                    echo "Error al actualizar el instrumento";
+                    exit();
+                }
+            } else {
+                if (!$ins->crear()){
+                    echo "Error al crear el instrumento";
+                    exit();
+                }
             }
         }
     }
