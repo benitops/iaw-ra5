@@ -26,6 +26,8 @@ if(isset($_POST['instrumentos'])){
         $ins->setNombre($i['nombre']);
         $ins->setPeso($i['peso']);
         $ins->setCalificacion($i['calificacion']);
+
+        var_dump($ins);
         if(isset($i['clave'])){
             $ins->setClave($i['clave']);
             if(!$ins->actualizar()){
