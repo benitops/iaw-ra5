@@ -10,10 +10,10 @@ if((isset($_GET['asignatura']) && is_numeric($_GET['asignatura']))){
 }
 
 if(isset($_GET['clave']) && $_GET['operacion'] == 'eliminar'){
-    //$u = new Instrumento();
-    //$u->setClave($_GET['clave']);
-    //$u->eliminar();
-    unset($u);
+    $ins = new Instrumento();
+    $ins->setClave($_GET['clave']);
+    $ins->eliminar();
+    unset($ins);
 }
 
 $asignatura = new Asignatura();
