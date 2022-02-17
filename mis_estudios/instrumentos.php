@@ -44,7 +44,7 @@ $asignatura->obtenerDetalles();
                 <th>Peso</th>
                 <th>Calificación</th>
             </tr>
-            <?php $asignatura->obtenerInstrumentos(); ?>
+            <?php $asignatura->mostrarInstrumentos(); ?>
         </table>
         <input type="submit" value="Guardar cambios"/>
     </form>

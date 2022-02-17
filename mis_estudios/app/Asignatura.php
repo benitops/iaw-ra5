@@ -179,8 +179,12 @@ class Asignatura
         $query = "SELECT * FROM unidades WHERE asignatura = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
-        $consulta->execute();
-        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        if ($consulta->execute()){
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return "Ha habido un error al realizar la consulta";
+            exit();
+        }
     }
 
     public function mostrarUnidades(){
@@ -212,26 +216,33 @@ class Asignatura
         }
     }
 
-    public function obtenerInstrumentos(){
+    public function obtenerInstrumentos(): bool|array
+    {
         global $db;
         $query = "SELECT instrumentos.*, unidades.numero, unidades.nombre AS 'unidadesNombre' 
                     FROM instrumentos INNER JOIN unidades on unidades.clave = instrumentos.unidad 
                     WHERE unidades.asignatura = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
-
-        //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
         if ($consulta->execute()){
-            //var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
-            if ($consulta->execute()){
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return "Ha habido un error al realizar la consulta";
+            exit();
+        }
+    }
+
+    public function mostrarInstrumentos(){
+        $instrumentos = $this->obtenerInstrumentos();
+            if ($instrumentos){
                 $i = 1;
-                foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) AS $instrumento){
+                foreach ($instrumentos AS $instrumento){
                     ?>
                     <tr>
-                        <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
-                        <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="<?php echo $instrumento['numero'] ?>" /></td>
-                        <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
-                        <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $instrumento['porcentaje'] ?>" /></td>
+                        <td><input type="hidden" name="instrumento[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
+                        <td><input type="text" name="instrumento[<?php echo $i; ?>][numero]" value="<?php echo $instrumento['numero'] ?>" /></td>
+                        <td><input type="text" name="instrumento[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
+                        <td><input type="number" name="instrumento[<?php echo $i; ?>][porcentaje]" value="<?php echo $instrumento['porcentaje'] ?>" /></td>
                         <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
                     </tr>
                     <?php
@@ -248,9 +259,6 @@ class Asignatura
             } else {
                 echo "Ha habido un error al ejecutarse la consulta";
             }
-        } else {
-            echo "Ha habido un error al ejecutarse la consulta";
-        }
     }
 
 }
