@@ -103,7 +103,6 @@ class Asignatura
 
     public function eliminar(){
         global $db;
-
         $unidades = $this->obtenerUnidades();
 
         if ($unidades){
@@ -191,6 +190,7 @@ class Asignatura
         }
 
     }
+
 
     public function obtenerUnidades(): bool|array
     {
