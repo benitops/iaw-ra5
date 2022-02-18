@@ -126,6 +126,25 @@ class Unidad
         }
     }
 
+    public function actualizarAsignatura(): bool
+    {
+        global $db;
+        $query = "UPDATE    mis_estudios.unidades t
+                    SET     t.asignatura = :asignatura
+                    WHERE   t.clave = :clave;
+                    ";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":asignatura", $this->asignatura);
+        $consulta->bindParam(":clave", $this->clave);
+
+        if ($consulta->execute()){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public function obtenerNotaMedia(){
         global $db;
         $query = "SELECT peso, calificacion 

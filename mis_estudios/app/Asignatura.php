@@ -157,6 +157,19 @@ class Asignatura
     {
         if ($this->validarCodigo($nuevoCodigo)){
             global $db;
+
+            $unidades = $this->obtenerUnidades();
+            foreach ($unidades as $u){
+                $unidad = new Unidad();
+                $unidad->setClave($u['clave']);
+                $unidad->setAsignatura($nuevoCodigo);
+
+                if (!$unidad->actualizarAsignatura()){
+                    echo "Error al actualizar la asignatura nueva de la unidad";
+                    exit();
+                }
+            }
+
             $query = "UPDATE mis_estudios.asignaturas t
                     SET t.codigo = :nuevoCodigo
                     WHERE t.codigo = :codigo; ";
