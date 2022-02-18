@@ -59,7 +59,8 @@ if(isset($_POST['unidades'])){
     </head>
     <body>
         <div class="centrado">
-            <h1>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h1>
+            <h2>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h2>
+            <h1><img src="img/tarta.png"/>UNIDADES</h1>
         </div>
         <div class="centrado">
             <form method="post" action="">

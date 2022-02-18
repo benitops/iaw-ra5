@@ -67,7 +67,7 @@ if(isset($_POST['instrumentos'])){
     </head>
     <body>
         <div class="centrado">
-            <h1>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h1>
+            <h2>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h2>
         </div>
         <div class="centrado">
             <form method="post" action="">
