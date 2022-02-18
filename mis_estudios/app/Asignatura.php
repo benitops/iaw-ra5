@@ -271,4 +271,29 @@ class Asignatura
         </tr>
         <?php
     }
+
+    public function obtenerNotaMedia(){
+        global $db;
+        $query = "SELECT clave, porcentaje 
+                    FROM unidades 
+                    WHERE asignatura = :asignatura AND unidades.porcentaje IS NOT NULL";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":asignatura", $this->codigo);
+
+        if ($consulta->execute()){
+            $dividendo = 0;
+            $divisor = 0;
+
+            foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
+                $unidad = new Unidad();
+                $unidad->setClave($item[0]);
+                $dividendo += $unidad->obtenerNotaMedia() * $item[1];
+                $divisor += $item[1];
+            }
+
+            return $dividendo/$divisor;
+        } else {
+            return false;
+        }
+    }
 }

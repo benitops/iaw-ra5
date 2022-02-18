@@ -50,7 +50,7 @@ if(isset($_GET['asignatura']) && $_GET['operacion'] == 'eliminar'){
                 <th>Horas/Sem</th>
                 <th>Profesor</th>
             </tr>
-            <?php getAsignaturas(); ?>
+            <?php mostrarAsignaturas(); ?>
         </table>
         <input type="submit" value="Guardar cambios"/>
     </form>

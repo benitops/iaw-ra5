@@ -99,4 +99,25 @@ class Unidad
             return false;
         }
     }
+
+    public function obtenerNotaMedia(){
+        global $db;
+        $query = "SELECT peso, calificacion FROM instrumentos WHERE unidad = :unidad AND calificacion IS NOT NULL";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":unidad", $this->clave);
+
+        if($consulta->execute()){
+            $dividendo = 0;
+            $divisor = 0;
+
+            foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
+                $dividendo += $item[0]* $item[1];
+                $divisor += $item[1];
+            }
+
+            return $dividendo/$divisor;
+        } else {
+            return false;
+        }
+    }
 }
