@@ -290,7 +290,7 @@ class Asignatura
 
                 //TODO Evitar que se tengan en cuenta unidades sin criterios de evaluación
 
-                if (!is_null($this->obtenerNotaMedia())){
+                if (!is_null($unidad->obtenerNotaMedia())){
                     $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
                     $divisor += $item['porcentaje'];
                 }
