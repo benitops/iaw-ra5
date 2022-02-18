@@ -15,10 +15,6 @@ input, select {
     box-sizing: border-box;
 }
 
-input[type=number] {
-    width: max-content;
-}
-
 .centrado {
     padding: 10px;
     margin: auto;
