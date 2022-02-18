@@ -8,12 +8,15 @@ table {
 }
 
 input, select {
-    width: 200px;
     height: 25px;
     margin: 2px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+input[type=number] {
+    width: 20px;
 }
 
 .centrado {
