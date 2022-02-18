@@ -71,6 +71,7 @@ if(isset($_POST['instrumentos'])){
         </div>
         <div class="centrado">
             <h2>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h2>
+            <h1><img src="img/smile.png"/>INSTRUMENTOS DE EVALUACIÓN</h1>
         </div>
         <div class="centrado">
             <form method="post" action="">
