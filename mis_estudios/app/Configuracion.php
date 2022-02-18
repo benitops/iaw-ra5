@@ -26,8 +26,7 @@ if ($check->fetchColumn()){
     $db->query("USE bps_mis_estudios;");
     $db->exec('SET NAMES utf8'); //Establecemos que usaremos caracteres en UTF-8 para no tener problemas con los caracteres especiales
 } else {
-    echo __DIR__;
-    $sql = file_get_contents('./mis_estudios.sql', FILE_USE_INCLUDE_PATH);
+    $sql = file_get_contents(__DIR__.'/mis_estudios.sql');
     if (!$db->exec($sql)){
         echo "Error, no existe la base de datos";
         exit();
