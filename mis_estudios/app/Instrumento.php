@@ -59,7 +59,7 @@ class Instrumento
      */
     public function crear(){
         global $db;
-        $query = "INSERT INTO mis_estudios.instrumentos (unidad, nombre, peso, calificacion) 
+        $query = "INSERT INTO instrumentos (unidad, nombre, peso, calificacion) 
                     VALUES (:unidad, :nombre, :peso, :calificacion);";
         $consulta = $db->prepare($query);
         $consulta->bindParam(":unidad", $this->unidad);
@@ -81,7 +81,7 @@ class Instrumento
      */
     public function actualizar(){
         global $db;
-        $query = "UPDATE mis_estudios.instrumentos t
+        $query = "UPDATE instrumentos t
                     SET t.unidad       = :unidad,
                         t.nombre       = :nombre,
                         t.peso         = :peso,
@@ -107,7 +107,7 @@ class Instrumento
     public function eliminar(){
         global $db;
         $query = "DELETE
-                    FROM mis_estudios.instrumentos
+                    FROM instrumentos
                     WHERE clave = :clave;";
 
         $consulta = $db->prepare($query);
