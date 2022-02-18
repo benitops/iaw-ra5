@@ -104,23 +104,20 @@ class Unidad
         global $db;
         $query = "SELECT peso, calificacion 
                     FROM instrumentos 
-                    WHERE unidad = :unidad AND calificacion IS NOT NULL";
+                    WHERE unidad = :unidad AND calificacion";
         $consulta = $db->prepare($query);
         $consulta->bindParam(":unidad", $this->clave);
 
         if($consulta->execute()){
             $dividendo = 0;
-            $divisor = 0;
 
-            foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
-                $dividendo += $item['peso']* $item['calificacion'];
-                $divisor += $item['peso'];
-            }
-
-            if (!$divisor){
+            if ($consulta->rowCount() == 0){
                 return NULL;
             } else {
-                return $dividendo/$divisor;
+                foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
+                    $dividendo += $item['peso'] * $item['calificacion'];
+                }
+                return $dividendo/100;
             }
         } else {
             return false;

@@ -282,26 +282,22 @@ class Asignatura
 
         if ($consulta->execute()){
             $dividendo = 0;
-            $divisor = 0;
 
-            foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
-                $unidad = new Unidad();
-                $unidad->setClave($item['clave']);
-
-                //TODO Evitar que se tengan en cuenta unidades sin criterios de evaluación
-
-                if (!is_null($unidad->obtenerNotaMedia())){
-                    $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
-                    $divisor += $item['porcentaje'];
-                }
-            }
-
-            if (!$divisor){
+            if($consulta->rowCount() == 0){
                 return NULL;
             } else {
-                return $dividendo/$divisor;
-            }
+                foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
+                    $unidad = new Unidad();
+                    $unidad->setClave($item['clave']);
 
+                    //TODO Evitar que se tengan en cuenta unidades sin criterios de evaluación
+
+                    if (!is_null($unidad->obtenerNotaMedia())){
+                        $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
+                    }
+                }
+                return $dividendo/100;
+            }
         } else {
             return false;
         }
