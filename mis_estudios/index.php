@@ -55,6 +55,7 @@ if(isset($_GET['asignatura']) && $_GET['operacion'] == 'eliminar'){
                     <?php mostrarAsignaturas(); ?>
                 </table>
                 <input type="submit" value="Guardar cambios"/>
+                <input type="reset" value="Descartar cambios"/>
             </form>
         </div>
     </body>

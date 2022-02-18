@@ -16,7 +16,7 @@ require_once 'app/Configuracion.php';
             <h1>ASIGNATURAS</h1>
         </div>
         <div class="contenido">
-            <form method="post" action="">
+            <form>
                 <table>
                     <tr>
                         <th>Código</th>
@@ -25,7 +25,6 @@ require_once 'app/Configuracion.php';
                     </tr>
                     <?php mostrarAsignaturasNotas(); ?>
                 </table>
-                <input type="submit" value="Guardar cambios"/>
             </form>
         </div>
     </body>

@@ -55,9 +55,9 @@ function mostrarAsignaturasNotas(){
             $asignatura->setCodigo($a['codigo']);
             ?>
             <tr>
-                <td><input type="text" name="expediente[<?php echo $i; ?>][id]" value="<?php echo $a['codigo'] ?>" /></td>
-                <td><input type="text" name="expediente[<?php echo $i; ?>][nombre]" value="<?php echo $a['nombre'] ?>" /></td>
-                <td><input type="text" name="expediente[<?php echo $i; ?>][notaMedia]" value="<?php echo $asignatura->obtenerNotaMedia(); ?>" /></td>
+                <td><input disabled type="text" name="expediente[<?php echo $i; ?>][id]" value="<?php echo $a['codigo'] ?>" /></td>
+                <td><input disabled type="text" name="expediente[<?php echo $i; ?>][nombre]" value="<?php echo $a['nombre'] ?>" /></td>
+                <td><input disabled type="text" name="expediente[<?php echo $i; ?>][notaMedia]" value="<?php echo $asignatura->obtenerNotaMedia(); ?>" /></td>
             </tr>
             <?php
             $i++;

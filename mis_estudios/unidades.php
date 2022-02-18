@@ -73,6 +73,7 @@ if(isset($_POST['unidades'])){
             <?php $asignatura->mostrarUnidades(); ?>
         </table>
         <input type="submit" value="Guardar cambios"/>
+        <input type="reset" value="Descartar cambios"/>
     </form>
 </div>
 </body>

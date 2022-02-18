@@ -82,6 +82,7 @@ if(isset($_POST['instrumentos'])){
             <?php $asignatura->mostrarInstrumentos(); ?>
         </table>
         <input type="submit" value="Guardar cambios"/>
+        <input type="reset" value="Descartar cambios"/>
     </form>
 </div>
 </body>
