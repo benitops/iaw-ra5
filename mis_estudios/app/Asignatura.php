@@ -248,7 +248,7 @@ class Asignatura
                     </td>
                     <td><input type="text" name="instrumentos[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
                     <td><input type="text" name="instrumentos[<?php echo $i; ?>][peso]" value="<?php echo $instrumento['peso'] ?>" /></td>
-                    <td><input type="number" name="instrumentos[<?php echo $i; ?>][calificacion]" value="<?php echo $instrumento['calificacion'] ?>" /></td>
+                    <td><input type="number" step=".01" name="instrumentos[<?php echo $i; ?>][calificacion]" value="<?php echo $instrumento['calificacion'] ?>" /></td>
                     <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
                 </tr>
                 <?php $i++;
@@ -266,7 +266,7 @@ class Asignatura
             </td>
             <td><input type="text" name="instrumentos[<?php echo $i; ?>][nombre]" value="" /></td>
             <td><input type="number" name="instrumentos[<?php echo $i; ?>][peso]" value="" /></td>
-            <td><input type="number" name="instrumentos[<?php echo $i; ?>][calificacion]" value="" /></td>
+            <td><input type="number" step=".01" name="instrumentos[<?php echo $i; ?>][calificacion]" value="" /></td>
 
         </tr>
         <?php
