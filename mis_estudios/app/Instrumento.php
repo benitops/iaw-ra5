@@ -87,18 +87,15 @@ class Instrumento
         }
     }
 
-    public function eliminar($clave = NULL){
+    public function eliminar(){
         global $db;
         $query = "DELETE
                     FROM mis_estudios.instrumentos
                     WHERE clave = :clave;";
-        $consulta = $db->prepare($query);
 
-        if(is_null($clave)){
-            $clave = $this->clave;
-        }
-        
-        $consulta->bindParam(':clave', $clave);
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(':clave', $this->clave);
+
         if($consulta->execute()){
             return true;
         } else {

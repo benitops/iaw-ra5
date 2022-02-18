@@ -85,7 +85,9 @@ class Unidad
         $instrumentos = $this->obtenerInstrumentos();
         if ($instrumentos){
             foreach ($instrumentos as $i){
-                if (!Instrumento::eliminar($i['clave'])){
+                $ins = new Instrumento();
+                $ins->setClave($i['clave']);
+                if ($ins->eliminar()){
                     return "Error al eliminar los Instrumentos de las unidades";
                     exit();
                 }
