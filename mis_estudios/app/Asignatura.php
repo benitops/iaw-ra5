@@ -118,6 +118,7 @@ class Asignatura
 
         if($consulta->execute()){
             // Si se ejecuta correctamente, devuelve TRUE
+            session_destroy();
             return true;
         } else {
             // Si no se ejecuta correctamente, devuelve FALSE
