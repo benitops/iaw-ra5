@@ -98,6 +98,20 @@ class Asignatura
 
     public function eliminar(){
         global $db;
+
+        $unidades = $this->obtenerUnidades();
+
+        if ($unidades){
+            foreach ($unidades as $u){
+                $ins = new Unidad();
+                $ins->setClave($u['clave']);
+                if (!$ins->eliminar()){
+                    return "Error al eliminar las unidades a través de la asignatura";
+                    exit();
+                }
+            }
+        }
+
         $query = "DELETE FROM mis_estudios.asignaturas WHERE codigo = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
