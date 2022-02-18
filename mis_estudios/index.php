@@ -3,7 +3,7 @@ require_once 'app/Configuracion.php';
 
 if(isset($_POST['asignatura'])){
     foreach ($_POST['asignatura'] as $a){
-        if (is_int($a['codigo']) && is_int($a['horas_semana'])){
+        if (is_numeric($a['codigo']) && is_numeric($a['horas_semana'])){
             $asignatura = new Asignatura();
             $asignatura->setNombre($a['nombre']);
             $asignatura->setProfesor($a['profesor']);
