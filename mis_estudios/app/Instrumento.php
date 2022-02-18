@@ -9,6 +9,7 @@ class Instrumento
     public mixed    $calificacion;
 
     /**
+     * Establece el valor de clave
      * @param int $clave
      */
     public function setClave(int $clave): void
@@ -17,6 +18,7 @@ class Instrumento
     }
 
     /**
+     * Establece el valor de unidad
      * @param int $unidad
      */
     public function setUnidad(int $unidad): void
@@ -25,6 +27,7 @@ class Instrumento
     }
 
     /**
+     * Establece el valor de nombre
      * @param string $nombre
      */
     public function setNombre(string $nombre): void
@@ -33,6 +36,7 @@ class Instrumento
     }
 
     /**
+     * Establece el valor de peso
      * @param int $peso
      */
     public function setPeso(int $peso): void
@@ -41,6 +45,7 @@ class Instrumento
     }
 
     /**
+     * Establece el valor de calificacion
      * @param mixed $calificacion
      */
     public function setCalificacion(mixed $calificacion): void
@@ -48,6 +53,10 @@ class Instrumento
         $this->calificacion = $calificacion;
     }
 
+    /**
+     * Inserta en la tabala toda la información del Instrumento
+     * @return bool
+     */
     public function crear(){
         global $db;
         $query = "INSERT INTO mis_estudios.instrumentos (unidad, nombre, peso, calificacion) 
@@ -66,6 +75,10 @@ class Instrumento
         }
     }
 
+    /**
+     * Actualiza los datos del instrumento
+     * @return bool
+     */
     public function actualizar(){
         global $db;
         $query = "UPDATE mis_estudios.instrumentos t
@@ -87,6 +100,10 @@ class Instrumento
         }
     }
 
+    /**
+     * Eliminar el instrumento
+     * @return bool
+     */
     public function eliminar(){
         global $db;
         $query = "DELETE

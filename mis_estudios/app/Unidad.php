@@ -9,6 +9,7 @@ class Unidad
     public int      $porcentaje;
 
     /**
+     * Establece el valor de clave
      * @param int|mixed $clave
      */
     public function setClave(mixed $clave): void
@@ -17,6 +18,7 @@ class Unidad
     }
 
     /**
+     * Establece el valor de asignatura
      * @param int|string $asignatura
      */
     public function setAsignatura(mixed $asignatura): void
@@ -25,6 +27,7 @@ class Unidad
     }
 
     /**
+     * Establece el valor de numero
      * @param int|string $numero
      */
     public function setNumero(mixed $numero): void
@@ -33,6 +36,7 @@ class Unidad
     }
 
     /**
+     * Establece el valor de nombre
      * @param string $nombre
      */
     public function setNombre(string $nombre): void
@@ -41,6 +45,7 @@ class Unidad
     }
 
     /**
+     * Establece el valor de porcentaje
      * @param int|string $porcentaje
      */
     public function setPorcentaje(mixed $porcentaje): void
@@ -48,6 +53,10 @@ class Unidad
         $this->porcentaje = (int)$porcentaje;
     }
 
+    /**
+     * Realiza una consulta para obtener la clave de los instrumentos
+     * @return array|false
+     */
     public function obtenerInstrumentos(){
         global $db;
         $query = "SELECT clave FROM instrumentos WHERE unidad = :unidad";
@@ -60,9 +69,13 @@ class Unidad
         }
     }
 
+    /**
+     * Inserta en la tabla toda la información de la Unidad
+     * @return bool
+     */
     public function crear(){
         global $db;
-        $query = "INSERT INTO mis_estudios.unidades (asignatura, numero, nombre, porcentaje) VALUES (:asignatura, :numero, :nombre, :porcentaje);";
+        $query = "INSERT INTO unidades (asignatura, numero, nombre, porcentaje) VALUES (:asignatura, :numero, :nombre, :porcentaje);";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':asignatura', $this->asignatura);
         $consulta->bindParam(':numero', $this->numero);
@@ -78,10 +91,14 @@ class Unidad
         }
     }
 
+    /**
+     * Elimina la unidad y sus instrumentos
+     * @return bool|string
+     */
     public function eliminar(): bool|string
     {
         global $db;
-
+        // Primero borramos sus instrumentos, para no perderlos
         $instrumentos = $this->obtenerInstrumentos();
         if ($instrumentos){
             foreach ($instrumentos as $i){
@@ -89,12 +106,13 @@ class Unidad
                 $ins->setClave($i['clave']);
                 if (!$ins->eliminar()){
                     return "Error al eliminar los Instrumentos de las unidades";
-                    exit();
+                    exit(); // Si hubiera algún error, dejamos de ejecutar el script.
                 }
             }
         }
 
-        $query = "DELETE FROM mis_estudios.unidades WHERE clave = :clave;";
+        // Borramos la unidad
+        $query = "DELETE FROM unidades WHERE clave = :clave;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':clave', $this->clave);
 
@@ -105,9 +123,13 @@ class Unidad
         }
     }
 
+    /**
+     * Actualizamos los valores de la Unidad.
+     * @return bool
+     */
     public function actualizar(){
         global $db;
-        $query = "UPDATE mis_estudios.unidades t
+        $query = "UPDATE unidades t
                     SET t.numero     = :numero,
                         t.nombre     = :nombre,
                         t.porcentaje = :porcentaje
@@ -126,10 +148,16 @@ class Unidad
         }
     }
 
+    /**
+     * Si hubiera un cambio en el código de la asignatura, esta función actualiza
+     * aquellas unidades que necesiten actualizar el código de referencia
+     * para no desvincularse de su asignatura.
+     * @return bool
+     */
     public function actualizarAsignatura(): bool
     {
         global $db;
-        $query = "UPDATE    mis_estudios.unidades t
+        $query = "UPDATE    unidades t
                     SET     t.asignatura = :asignatura
                     WHERE   t.clave = :clave;
                     ";
@@ -145,6 +173,10 @@ class Unidad
 
     }
 
+    /**
+     * Calcula la nota media de la Unidad, teniendo en cuenta sus instrumentos.
+     * @return false|float|int|null
+     */
     public function obtenerNotaMedia(){
         global $db;
         $query = "SELECT peso, calificacion 
@@ -155,10 +187,11 @@ class Unidad
 
         if($consulta->execute()){
             $dividendo = 0;
-
             if ($consulta->rowCount() == 0){
+                // Si no encuentra instrumentos, devuelve NULL.
                 return NULL;
             } else {
+                // Si hay instrumentos, para cada uno de ellos calcula su aportación
                 foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
                     $dividendo += $item['peso'] * $item['calificacion'];
                 }

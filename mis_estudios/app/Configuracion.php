@@ -19,17 +19,18 @@ try {
 }
 
 // Comprobamos si existe la base de datos
-
 $check = $db->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'bps_mis_estudios'");
 if ($check->fetchColumn()){
-    // Existe
+    // Existe, por lo tanto indicamos que se use
     $db->query("USE bps_mis_estudios;");
     $db->exec('SET NAMES utf8'); //Establecemos que usaremos caracteres en UTF-8 para no tener problemas con los caracteres especiales
 } else {
+    // NO existe, así que cargamos el fichero exportado que creará toda la base de datos.
     $sql = file_get_contents(__DIR__.'/mis_estudios.sql');
     $db->exec($sql);
 }
 
+// Iniciamos las sesiones para poder saber sobre qué asignatura trabajar.
 session_start();
 
 require_once 'Unidad.php';
