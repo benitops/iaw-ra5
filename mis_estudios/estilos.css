@@ -2,9 +2,12 @@
     font-family: 'Roboto', sans-serif;
 }
 
+table {
+    margin: 0 auto;
+}
+
 .centrado {
     margin: auto;
     width: 50%;
-    padding: 10px;
     text-align: center;
 }
