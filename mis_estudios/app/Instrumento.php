@@ -6,7 +6,7 @@ class Instrumento
     public int      $unidad;    // Unidades->clave;
     public string   $nombre;
     public int      $peso;
-    public mixed   $calificacion;
+    public mixed    $calificacion;
 
     /**
      * @param int $clave
