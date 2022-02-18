@@ -3,19 +3,23 @@ require_once 'app/Configuracion.php';
 
 if(isset($_POST['asignatura'])){
     foreach ($_POST['asignatura'] as $a){
-        $asignatura = new Asignatura();
-        $asignatura->setNombre($a['nombre']);
-        $asignatura->setProfesor($a['profesor']);
-        $asignatura->setHorasSemana($a['horas_semana']);
-        if(isset($a['id'])){
-            $asignatura->setCodigo($a['id']);
-            $asignatura->actualizar();
-            if ($a['id'] !== $a['codigo']){
-                $asignatura->actualizarCodigo($a['codigo']);
+        if (is_int($a['codigo']) && is_int($a['horas_semana'])){
+            $asignatura = new Asignatura();
+            $asignatura->setNombre($a['nombre']);
+            $asignatura->setProfesor($a['profesor']);
+            $asignatura->setHorasSemana($a['horas_semana']);
+            if(isset($a['id'])){
+                $asignatura->setCodigo($a['id']);
+                $asignatura->actualizar();
+                if ($a['id'] !== $a['codigo']){
+                    $asignatura->actualizarCodigo($a['codigo']);
+                }
+            } else if (strlen($a['codigo'] >= 1)){
+                $asignatura->setCodigo($a['codigo']);
+                $asignatura->crear();
             }
-        } else if (strlen($a['codigo'] >= 1)){
-            $asignatura->setCodigo($a['codigo']);
-            $asignatura->crear();
+        } else {
+            echo "<script>alert('Los campos `Código` y `Horas/Sem` deben ser número enteros.')</script>";
         }
     }
 }
