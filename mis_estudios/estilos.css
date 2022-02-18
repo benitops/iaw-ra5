@@ -16,7 +16,7 @@ input, select {
 }
 
 input[type=number] {
-    width: auto;
+    width: max-content;
 }
 
 .centrado {
