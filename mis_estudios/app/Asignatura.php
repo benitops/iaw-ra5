@@ -287,8 +287,13 @@ class Asignatura
             foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
                 $unidad = new Unidad();
                 $unidad->setClave($item['clave']);
-                $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
-                $divisor += $item['porcentaje'];
+
+                //TODO Evitar que se tengan en cuenta unidades sin criterios de evaluación
+
+                if (!is_null($this->obtenerNotaMedia())){
+                    $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
+                    $divisor += $item['porcentaje'];
+                }
             }
 
             if (!$divisor){
