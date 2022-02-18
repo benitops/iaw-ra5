@@ -18,6 +18,7 @@ $asignatura = new Asignatura();
 $asignatura->setCodigo($_SESSION['asignatura']);
 
 if($asignatura->validarCodigo()){
+    unset($_SESSION['asignatura']);
     header('Location: index.php');
 }
 
