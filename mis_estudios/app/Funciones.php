@@ -67,7 +67,7 @@ function mostrarAsignaturasNotas(){
             ?>
             <tr>
                 <td><input disabled type="text" name="expediente[<?php echo $i; ?>][id]" value="<?php echo $a['codigo'] ?>" /></td>
-                <td style="width:50%;"><input disabled type="text" name="expediente[<?php echo $i; ?>][nombre]" value="<?php echo $a['nombre'] ?>" /></td>
+                <td style="width:50%;"><input style="width:auto" disabled type="text" name="expediente[<?php echo $i; ?>][nombre]" value="<?php echo $a['nombre'] ?>" /></td>
                 <td><input disabled type="text" name="expediente[<?php echo $i; ?>][notaMedia]" value="<?php echo $asignatura->obtenerNotaMedia(); ?>" /></td>
             </tr>
             <?php
