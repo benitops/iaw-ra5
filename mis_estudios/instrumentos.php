@@ -76,7 +76,7 @@ if(isset($_POST['instrumentos'])){
                         <th></th>
                         <th>Unidad</th>
                         <th>Nombre del Instrumento</th>
-                        <th>Peso</th>
+                        <th>Peso (%)</th>
                         <th>Calificación</th>
                     </tr>
                     <?php $asignatura->mostrarInstrumentos(); ?>

@@ -68,7 +68,7 @@ if(isset($_POST['unidades'])){
                         <th></th>
                         <th>Núm</th>
                         <th>Nombre</th>
-                        <th>Peso</th>
+                        <th>Peso (%)</th>
                     </tr>
                     <?php $asignatura->mostrarUnidades(); ?>
                 </table>
