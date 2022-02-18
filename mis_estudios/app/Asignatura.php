@@ -56,8 +56,13 @@ class Asignatura
         $this->profesor = $profesor;
     }
 
-    public function validarCodigo($codigo){
+    public function validarCodigo($codigo = NULL){
         global $db;
+
+        if(is_null($codigo)){
+            $codigo = $this->codigo;
+        }
+
         $query = "SELECT nombre FROM asignaturas WHERE CODIGO = :codigo;";
         $con = $db->prepare($query);
         $con->bindParam(":codigo", $codigo);

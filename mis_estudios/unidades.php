@@ -16,6 +16,11 @@ if(isset($_GET['clave']) && $_GET['operacion'] == 'eliminar'){
 
 $asignatura = new Asignatura();
 $asignatura->setCodigo($_SESSION['asignatura']);
+
+if(!$asignatura->validarCodigo()){
+    header('Location: index.php');
+}
+
 $asignatura->obtenerDetalles();
 
 if(isset($_POST['unidades'])){
