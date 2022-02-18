@@ -102,7 +102,9 @@ class Unidad
 
     public function obtenerNotaMedia(){
         global $db;
-        $query = "SELECT peso, calificacion FROM instrumentos WHERE unidad = :unidad AND calificacion IS NOT NULL";
+        $query = "SELECT peso, calificacion 
+                    FROM instrumentos 
+                    WHERE unidad = :unidad AND calificacion IS NOT NULL";
         $consulta = $db->prepare($query);
         $consulta->bindParam(":unidad", $this->clave);
 
@@ -111,8 +113,8 @@ class Unidad
             $divisor = 0;
 
             foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
-                $dividendo += $item[0]* $item[1];
-                $divisor += $item[1];
+                $dividendo += $item['peso']* $item['calificacion'];
+                $divisor += $item['peso'];
             }
 
             return $dividendo/$divisor;

@@ -286,9 +286,9 @@ class Asignatura
 
             foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
                 $unidad = new Unidad();
-                $unidad->setClave($item[0]);
-                $dividendo += $unidad->obtenerNotaMedia() * $item[1];
-                $divisor += $item[1];
+                $unidad->setClave($item['clave']);
+                $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
+                $divisor += $item['porcentaje'];
             }
 
             return $dividendo/$divisor;
