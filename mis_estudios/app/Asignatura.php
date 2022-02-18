@@ -291,7 +291,12 @@ class Asignatura
                 $divisor += $item['porcentaje'];
             }
 
-            return $dividendo/$divisor;
+            if (!$divisor){
+                return NULL;
+            } else {
+                return $dividendo/$divisor;
+            }
+
         } else {
             return false;
         }

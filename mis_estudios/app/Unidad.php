@@ -117,7 +117,11 @@ class Unidad
                 $divisor += $item['peso'];
             }
 
-            return $dividendo/$divisor;
+            if (!$divisor){
+                return NULL;
+            } else {
+                return $dividendo/$divisor;
+            }
         } else {
             return false;
         }
