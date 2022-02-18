@@ -27,33 +27,36 @@ if(isset($_GET['asignatura']) && $_GET['operacion'] == 'eliminar'){
 }
 
 ?>
+<!DOCTYPE html>
 <html lang="es">
-<head>
-    <title>Asignaturas - Mis Estudios</title>
-    <meta charset="UTF-8">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-    </style>
-    <link rel="stylesheet" href="estilos.css">
-</head>
-<body>
-<div class="encabezado centrado">
-    <h1>ASIGNATURAS</h1>
-</div>
-<div class="contenido">
-    <form method="post" action="">
-        <table>
-            <tr>
-                <th></th>
-                <th>Codigo</th>
-                <th>Nombre</th>
-                <th>Horas/Sem</th>
-                <th>Profesor</th>
-            </tr>
-            <?php mostrarAsignaturas(); ?>
-        </table>
-        <input type="submit" value="Guardar cambios"/>
-    </form>
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Asignaturas - Mis Estudios</title>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+        </style>
+    </head>
+    <body>
+        <div class="encabezado centrado">
+            <h1>ASIGNATURAS</h1>
+        </div>
+        <div class="contenido">
+            <form method="post" action="">
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Horas/Sem</th>
+                        <th>Profesor</th>
+                    </tr>
+                    <?php mostrarAsignaturas(); ?>
+                </table>
+                <input type="submit" value="Guardar cambios"/>
+            </form>
+        </div>
+    </body>
 </html>
