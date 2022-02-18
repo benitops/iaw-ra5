@@ -8,7 +8,6 @@
 $db_host = "localhost";
 $db_user = "ra5";
 $db_pass = "w62cC8p!";
-$db_name = "mis_estudios";
 
 // Ahora, establecemos la conexión.
 try {
@@ -21,16 +20,17 @@ try {
 
 // Comprobamos si existe la base de datos
 
-$check = $db->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'mis_estudios'");
+$check = $db->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'bps_mis_estudios'");
 if ($check->fetchColumn()){
     // Existe
-    $db->query("USE mis_estudios;");
+    $db->query("USE bps_mis_estudios;");
     $db->exec('SET NAMES utf8'); //Establecemos que usaremos caracteres en UTF-8 para no tener problemas con los caracteres especiales
 } else {
-    //TODO Terminar la creación de tablas si no existen
-    //$db->query("");
-    echo "Error, no existe la base de datos";
-    exit();
+    $sql = file_get_contents('mis_estudios.sql');
+    if (!$db->exec($sql)){
+        echo "Error, no existe la base de datos";
+        exit();
+    }
 }
 
 session_start();
