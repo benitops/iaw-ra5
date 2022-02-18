@@ -1,6 +1,5 @@
 <?php
 require_once 'app/Configuracion.php';
-session_start();
 
 if((isset($_GET['asignatura']) && is_numeric($_GET['asignatura']))){
     $_SESSION['asignatura'] = $_GET['asignatura'];

@@ -2,7 +2,6 @@
 require_once 'app/Configuracion.php';
 
 ?>
-
 <html lang="es">
     <head>
         <title>Asignaturas - Mis Estudios</title>
