@@ -322,6 +322,9 @@ class Asignatura
                     <td>
                         <select name="instrumentos[<?php echo $i; ?>][unidad]">
                             <?php foreach ($this->obtenerUnidades() as $u){
+                                //Se obtienen las unidades para el dropdown
+                                //Por cada unidad se añade una opción
+                                //Se comprueba si la unidad y la clave es la misma, para que aparezca seleccionado
                                 if ($instrumento['unidad'] == $u['clave']) { ?>
                                     <option value="<?php echo $u['clave']; ?>" selected><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
                                     <?php } else { ?>
