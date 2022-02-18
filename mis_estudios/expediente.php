@@ -24,7 +24,7 @@ require_once 'app/Configuracion.php';
                         <th>Nombre</th>
                         <th>Nota media</th>
                     </tr>
-                    <?php mostrarAsignaturas(); ?>
+                    <?php mostrarAsignaturasNotas(); ?>
                 </table>
                 <input type="submit" value="Guardar cambios"/>
             </form>
