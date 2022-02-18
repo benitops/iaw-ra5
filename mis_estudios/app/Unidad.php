@@ -48,6 +48,18 @@ class Unidad
         $this->porcentaje = (int)$porcentaje;
     }
 
+    public function obtenerInstrumentos(){
+        global $db;
+        $query = "SELECT clave FROM instrumentos WHERE unidad = :unidad";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":unidad", $this->clave);
+        if ($consulta->execute()){
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
+    }
+
     public function crear(){
         global $db;
         $query = "INSERT INTO mis_estudios.unidades (asignatura, numero, nombre, porcentaje) VALUES (:asignatura, :numero, :nombre, :porcentaje);";
@@ -66,8 +78,22 @@ class Unidad
         }
     }
 
-    public function eliminar(){
+    public function eliminar(): bool|string
+    {
         global $db;
+
+        $instrumentos = $this->obtenerInstrumentos();
+        if ($instrumentos){
+            foreach ($instrumentos as $i){
+                $ins = new Instrumento();
+                $ins->setClave($i['clave']);
+                if (!$ins->eliminar()){
+                    return "Error al eliminar los Instrumentos de las unidades";
+                    exit();
+                }
+            }
+        }
+
         $query = "DELETE FROM mis_estudios.unidades WHERE clave = :clave;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':clave', $this->clave);
@@ -99,4 +125,29 @@ class Unidad
             return false;
         }
     }
+
+    public function obtenerNotaMedia(){
+        global $db;
+        $query = "SELECT peso, calificacion 
+                    FROM instrumentos 
+                    WHERE unidad = :unidad AND calificacion";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":unidad", $this->clave);
+
+        if($consulta->execute()){
+            $dividendo = 0;
+
+            if ($consulta->rowCount() == 0){
+                return NULL;
+            } else {
+                foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
+                    $dividendo += $item['peso'] * $item['calificacion'];
+                }
+                return $dividendo/100;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }

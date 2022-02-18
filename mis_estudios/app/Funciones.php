@@ -1,14 +1,24 @@
 <?php
 
-function getAsignaturas(){
+function obtenerAsignaturas(): bool|array|string
+{
     global $db;
     $query = "SELECT * FROM asignaturas";
-
     $consulta = $db->prepare($query);
 
     if ($consulta->execute()){
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        return "Ha habido un error al realizar la consulta";
+        exit();
+    }
+}
+
+function mostrarAsignaturas(){
+    $asignaturas = obtenerAsignaturas();
+    if ($asignaturas){
         $i = 1;
-        foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) AS $asignatura){
+        foreach ($asignaturas AS $asignatura){
             ?>
             <tr>
                 <td><input type="hidden" name="asignatura[<?php echo $i; ?>][id]" value="<?php echo $asignatura['codigo'] ?>" /></td>
@@ -33,7 +43,24 @@ function getAsignaturas(){
             <td><input type="profesor" name="asignatura[<?php echo $i; ?>][profesor]" value="" /></td>
         </tr>
         <?php
-
     }
+}
 
+function mostrarAsignaturasNotas(){
+    $asignaturas = obtenerAsignaturas();
+    if ($asignaturas){
+        $i = 1;
+        foreach ($asignaturas AS $a){
+            $asignatura = new Asignatura();
+            $asignatura->setCodigo($a['codigo']);
+            ?>
+            <tr>
+                <td><input type="text" name="expediente[<?php echo $i; ?>][id]" value="<?php echo $a['codigo'] ?>" /></td>
+                <td><input type="text" name="expediente[<?php echo $i; ?>][nombre]" value="<?php echo $a['nombre'] ?>" /></td>
+                <td><input type="text" name="expediente[<?php echo $i; ?>][notaMedia]" value="<?php echo $asignatura->obtenerNotaMedia(); ?>" /></td>
+            </tr>
+            <?php
+            $i++;
+        }
+    }
 }

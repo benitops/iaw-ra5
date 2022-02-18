@@ -1,7 +1,5 @@
 <?php
-
 require_once 'app/Configuracion.php';
-session_start();
 
 if((isset($_GET['asignatura']) && is_numeric($_GET['asignatura']))){
     $_SESSION['asignatura'] = $_GET['asignatura'];
@@ -10,15 +8,52 @@ if((isset($_GET['asignatura']) && is_numeric($_GET['asignatura']))){
 }
 
 if(isset($_GET['clave']) && $_GET['operacion'] == 'eliminar'){
-    //$u = new Instrumento();
-    //$u->setClave($_GET['clave']);
-    //$u->eliminar();
-    unset($u);
+    $ins = new Instrumento();
+    $ins->setClave($_GET['clave']);
+    $ins->eliminar();
+    unset($ins);
 }
 
 $asignatura = new Asignatura();
 $asignatura->setCodigo($_SESSION['asignatura']);
+
+if($asignatura->validarCodigo()){
+    unset($_SESSION['asignatura']);
+    header('Location: index.php');
+}
+
 $asignatura->obtenerDetalles();
+
+if(isset($_POST['instrumentos'])){
+    foreach ($_POST['instrumentos'] as $i){
+
+        if (!empty($i['unidad']) && !empty($i['nombre']) && !empty($i['peso'])){
+            $ins = new Instrumento();
+            $ins->setUnidad($i['unidad']);
+            $ins->setNombre($i['nombre']);
+            $ins->setPeso($i['peso']);
+
+            if(!strlen($i['calificacion'])){
+                $ins->setCalificacion(NULL);
+            } else {
+                $ins->setCalificacion($i['calificacion']);
+            }
+
+            if(isset($i['clave'])){
+                $ins->setClave($i['clave']);
+                if(!$ins->actualizar()){
+                    echo "Error al actualizar el instrumento";
+                    exit();
+                }
+            } else {
+                if (!$ins->crear()){
+                    echo "Error al crear el instrumento";
+                    exit();
+                }
+            }
+        }
+    }
+}
 
 ?>
 <html lang="es">
@@ -44,7 +79,7 @@ $asignatura->obtenerDetalles();
                 <th>Peso</th>
                 <th>Calificación</th>
             </tr>
-            <?php $asignatura->obtenerInstrumentos(); ?>
+            <?php $asignatura->mostrarInstrumentos(); ?>
         </table>
         <input type="submit" value="Guardar cambios"/>
     </form>

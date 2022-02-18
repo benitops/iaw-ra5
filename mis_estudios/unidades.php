@@ -1,6 +1,5 @@
 <?php
 require_once 'app/Configuracion.php';
-session_start();
 
 if((isset($_GET['asignatura']) && is_numeric($_GET['asignatura']))){
     $_SESSION['asignatura'] = $_GET['asignatura'];
@@ -17,6 +16,12 @@ if(isset($_GET['clave']) && $_GET['operacion'] == 'eliminar'){
 
 $asignatura = new Asignatura();
 $asignatura->setCodigo($_SESSION['asignatura']);
+
+if($asignatura->validarCodigo()){
+    unset($_SESSION['asignatura']);
+    header('Location: index.php');
+}
+
 $asignatura->obtenerDetalles();
 
 if(isset($_POST['unidades'])){
@@ -65,7 +70,7 @@ if(isset($_POST['unidades'])){
                 <th>Nombre</th>
                 <th>Peso</th>
             </tr>
-            <?php $asignatura->obtenerUnidades(); ?>
+            <?php $asignatura->mostrarUnidades(); ?>
         </table>
         <input type="submit" value="Guardar cambios"/>
     </form>

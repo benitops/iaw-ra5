@@ -56,8 +56,13 @@ class Asignatura
         $this->profesor = $profesor;
     }
 
-    public function validarCodigo($codigo){
+    public function validarCodigo($codigo = NULL){
         global $db;
+
+        if(is_null($codigo)){
+            $codigo = $this->codigo;
+        }
+
         $query = "SELECT nombre FROM asignaturas WHERE CODIGO = :codigo;";
         $con = $db->prepare($query);
         $con->bindParam(":codigo", $codigo);
@@ -98,6 +103,19 @@ class Asignatura
 
     public function eliminar(){
         global $db;
+        $unidades = $this->obtenerUnidades();
+
+        if ($unidades){
+            foreach ($unidades as $u){
+                $ins = new Unidad();
+                $ins->setClave($u['clave']);
+                if (!$ins->eliminar()){
+                    return "Error al eliminar las unidades a través de la asignatura";
+                    exit();
+                }
+            }
+        }
+
         $query = "DELETE FROM mis_estudios.asignaturas WHERE codigo = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
@@ -173,16 +191,26 @@ class Asignatura
 
     }
 
-    public function obtenerUnidades(){
+
+    public function obtenerUnidades(): bool|array
+    {
         global $db;
         $query = "SELECT * FROM unidades WHERE asignatura = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
-
-        //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
         if ($consulta->execute()){
-            $i = 1;
-            foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) AS $unidad){
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return "Ha habido un error al realizar la consulta";
+            exit();
+        }
+    }
+
+    public function mostrarUnidades(){
+        $unidades = $this->obtenerUnidades();
+        $i = 1;
+        if ($unidades){
+            foreach ($unidades AS $unidad){
                 ?>
                 <tr>
                     <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $unidad['clave'] ?>" /></td>
@@ -191,62 +219,106 @@ class Asignatura
                     <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $unidad['porcentaje'] ?>" /></td>
                     <td><a href="?operacion=eliminar&clave=<?php echo $unidad['clave'] ?>"><img src="img/remove32.png"></a></td>
                 </tr>
-                <?php
-                $i++;
+                <?php $i++;
             }
-            ?>
-            <tr>
-                <td></td>
-                <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
-                <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
-                <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
-            </tr>
-            <?php
-        } else {
-            echo "Ha habido un error al ejecutarse la consulta";
-        }
-
+        }  ?>
+        <tr>
+            <td></td>
+            <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
+            <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
+            <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
+        </tr>
+        <?php
     }
 
-    public function obtenerInstrumentos(){
+    public function obtenerInstrumentos(): bool|array
+    {
         global $db;
         $query = "SELECT instrumentos.*, unidades.numero, unidades.nombre AS 'unidadesNombre' 
                     FROM instrumentos INNER JOIN unidades on unidades.clave = instrumentos.unidad 
                     WHERE unidades.asignatura = :codigo;";
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
-
-        //TODO obtenerInstrumentos() devuelva los datos para la WEB de forma visual.
         if ($consulta->execute()){
-            //var_dump($consulta->fetchAll(PDO::FETCH_ASSOC));
-            if ($consulta->execute()){
-                $i = 1;
-                foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) AS $instrumento){
-                    ?>
-                    <tr>
-                        <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
-                        <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="<?php echo $instrumento['numero'] ?>" /></td>
-                        <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
-                        <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $instrumento['porcentaje'] ?>" /></td>
-                        <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
-                    </tr>
-                    <?php
-                    $i++;
-                }
-                ?>
-                <tr>
-                    <td></td>
-                    <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="" /></td>
-                    <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="" /></td>
-                    <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="" /></td>
-                </tr>
-                <?php
-            } else {
-                echo "Ha habido un error al ejecutarse la consulta";
-            }
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
         } else {
-            echo "Ha habido un error al ejecutarse la consulta";
+            return "Ha habido un error al realizar la consulta";
+            exit();
         }
     }
 
+    public function mostrarInstrumentos(){
+        $instrumentos = $this->obtenerInstrumentos();
+        $i = 1;
+        if ($instrumentos){
+            foreach ($instrumentos AS $instrumento){ ?>
+                <tr>
+                    <td><input type="hidden" name="instrumentos[<?php echo $i; ?>][clave]" value="<?php echo $instrumento['clave'] ?>" /></td>
+                    <td>
+                        <select name="instrumentos[<?php echo $i; ?>][unidad]">
+                            <?php foreach ($this->obtenerUnidades() as $u){
+                                if ($instrumento['unidad'] == $u['clave']) { ?>
+                                    <option value="<?php echo $u['clave']; ?>" selected><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $u['clave']; ?>"><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
+                                <?php }
+                            } ?>
+                        </select>
+                    </td>
+                    <td><input type="text" name="instrumentos[<?php echo $i; ?>][nombre]" value="<?php echo $instrumento['nombre'] ?>" /></td>
+                    <td><input type="text" name="instrumentos[<?php echo $i; ?>][peso]" value="<?php echo $instrumento['peso'] ?>" /></td>
+                    <td><input type="number" step=".01" name="instrumentos[<?php echo $i; ?>][calificacion]" value="<?php echo $instrumento['calificacion'] ?>" /></td>
+                    <td><a href="?operacion=eliminar&clave=<?php echo $instrumento['clave'] ?>"><img src="img/remove32.png"></a></td>
+                </tr>
+                <?php $i++;
+            }
+        } ?>
+        <tr>
+            <td></td>
+            <td>
+                <select name="instrumentos[<?php echo $i; ?>][unidad]">
+                    <option selected disabled>Selecciona unidad</option>
+                    <?php foreach ($this->obtenerUnidades() as $u){ ?>
+                    <option value="<?php echo $u['clave']; ?>"><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
+                    <?php } ?>
+                </select>
+            </td>
+            <td><input type="text" name="instrumentos[<?php echo $i; ?>][nombre]" value="" /></td>
+            <td><input type="number" name="instrumentos[<?php echo $i; ?>][peso]" value="" /></td>
+            <td><input type="number" step=".01" name="instrumentos[<?php echo $i; ?>][calificacion]" value="" /></td>
+
+        </tr>
+        <?php
+    }
+
+    public function obtenerNotaMedia(){
+        global $db;
+        $query = "SELECT clave, porcentaje 
+                    FROM unidades 
+                    WHERE asignatura = :asignatura AND unidades.porcentaje IS NOT NULL";
+        $consulta = $db->prepare($query);
+        $consulta->bindParam(":asignatura", $this->codigo);
+
+        if ($consulta->execute()){
+            $dividendo = 0;
+
+            if($consulta->rowCount() == 0){
+                return NULL;
+            } else {
+                foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
+                    $unidad = new Unidad();
+                    $unidad->setClave($item['clave']);
+
+                    //TODO Evitar que se tengan en cuenta unidades sin criterios de evaluación
+
+                    if (!is_null($unidad->obtenerNotaMedia())){
+                        $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
+                    }
+                }
+                return $dividendo/100;
+            }
+        } else {
+            return false;
+        }
+    }
 }

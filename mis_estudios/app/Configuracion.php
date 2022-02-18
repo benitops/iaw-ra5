@@ -33,6 +33,8 @@ if ($check->fetchColumn()){
     exit();
 }
 
+session_start();
+
 require_once 'Unidad.php';
 require_once 'Instrumento.php';
 require_once 'Asignatura.php';
