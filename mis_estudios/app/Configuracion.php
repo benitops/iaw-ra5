@@ -27,11 +27,7 @@ if ($check->fetchColumn()){
     $db->exec('SET NAMES utf8'); //Establecemos que usaremos caracteres en UTF-8 para no tener problemas con los caracteres especiales
 } else {
     $sql = file_get_contents(__DIR__.'/mis_estudios.sql');
-    $db->prepare($sql);
-    if (!$db->execute()){
-        echo "Error, no existe la base de datos";
-        exit();
-    }
+    $db->exec($sql);
 }
 
 session_start();
