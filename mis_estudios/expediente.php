@@ -13,7 +13,7 @@ require_once 'app/Configuracion.php';
     </head>
     <body>
         <div class="encabezado centrado">
-            <h1>ASIGNATURAS</h1>
+            <h1><img src="img/birrete.png"/>EXPEDIENTE</h1>
         </div>
         <div class="contenido">
             <form>
