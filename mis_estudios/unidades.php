@@ -58,6 +58,9 @@ if(isset($_POST['unidades'])){
         <link rel="stylesheet" href="estilos.css">
     </head>
     <body>
+        <div class="alineado-izq">
+            <a href="index.php">< Volver</a>
+        </div>
         <div class="centrado">
             <h2>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h2>
             <h1><img src="img/tarta.png"/>UNIDADES</h1>

@@ -15,13 +15,15 @@ input, select {
     box-sizing: border-box;
 }
 
-td input {
-    width: max-content;
-}
-
 .centrado {
     padding: 10px;
     margin: auto;
     width: 50%;
     text-align: center;
+}
+
+.alineado-izq {
+    padding: 10px;
+    width: 50%;
+    text-align: left;
 }

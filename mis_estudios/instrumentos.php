@@ -66,6 +66,9 @@ if(isset($_POST['instrumentos'])){
         <link rel="stylesheet" href="estilos.css">
     </head>
     <body>
+        <div class="alineado-izq">
+            <a href="index.php">< Volver</a>
+        </div>
         <div class="centrado">
             <h2>Asignatura <?php echo $asignatura->obtenerCodigo().': '.$asignatura->obtenerNombre(); ?></h2>
         </div>
