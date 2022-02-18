@@ -39,10 +39,10 @@ if(isset($_GET['asignatura']) && $_GET['operacion'] == 'eliminar'){
         </style>
     </head>
     <body>
-        <div class="encabezado centrado">
+        <div class="centrado">
             <h1>ASIGNATURAS</h1>
         </div>
-        <div class="contenido">
+        <div class="centrado">
             <form method="post" action="">
                 <table>
                     <tr>

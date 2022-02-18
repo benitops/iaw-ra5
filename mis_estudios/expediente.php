@@ -12,10 +12,10 @@ require_once 'app/Configuracion.php';
         <link rel="stylesheet" href="estilos.css">
     </head>
     <body>
-        <div class="encabezado centrado">
-            <h1><img src="img/birrete.png"/>EXPEDIENTE</h1>
+        <div class="centrado">
+            <h1><img src="img/birrete.png"/> EXPEDIENTE</h1>
         </div>
-        <div class="contenido">
+        <div class="centrado">
             <form>
                 <table>
                     <tr>
