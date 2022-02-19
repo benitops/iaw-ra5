@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 18-02-2022 a las 22:39:11
+-- Tiempo de generación: 19-02-2022 a las 01:31:24
 -- Versión del servidor: 10.3.32-MariaDB-0ubuntu0.20.04.1
 -- Versión de PHP: 7.4.27
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `mis_estudios`
+-- Base de datos: `bps_mis_estudios`
 --
 CREATE DATABASE IF NOT EXISTS `bps_mis_estudios` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `bps_mis_estudios`;
@@ -69,10 +69,8 @@ CREATE TABLE `instrumentos` (
 --
 
 INSERT INTO `instrumentos` (`clave`, `unidad`, `nombre`, `peso`, `calificacion`) VALUES
-(1, 1, 'Examen Teórico', 45, '8.50'),
-(2, 1, 'Examen Práctico', 35, '6.30'),
-(3, 1, 'Actividades de Aula', 20, NULL),
-(4, 2, 'Examen', 70, '9.20'),
+(1, 1, 'Presentación de un trabajo', 100, '8.50'),
+(4, 2, 'Prueba teórica', 60, '7.00'),
 (32, 14, 'EXAMEN TEÓRICO', 20, '6.67'),
 (33, 14, 'EXAMEN PRÁCTICO', 70, '10.00'),
 (34, 14, 'TRABAJO', 10, '10.00'),
@@ -87,16 +85,80 @@ INSERT INTO `instrumentos` (`clave`, `unidad`, `nombre`, `peso`, `calificacion`)
 (43, 17, 'TRABAJO', 10, '10.00'),
 (44, 18, 'EXAMEN TEÓRICO', 20, '5.17'),
 (45, 18, 'EXAMEN PRÁCTICO', 70, '10.00'),
-(46, 18, 'TRABAJO', 10, '10.00'),
+(46, 18, 'TRABAJO', 10, NULL),
 (47, 19, 'EXAMEN TEÓRICO', 20, '10.00'),
 (48, 19, 'EXAMEN PRÁCTICO', 70, '10.00'),
-(49, 19, 'TRABAJO', 10, '10.00'),
+(49, 19, 'TRABAJO', 10, NULL),
 (50, 20, 'EXAMEN TEÓRICO', 20, '10.00'),
 (51, 20, 'EXAMEN PRÁCTICO', 70, '10.00'),
-(52, 20, 'TRABAJO', 10, '10.00'),
+(52, 20, 'TRABAJO', 10, NULL),
 (53, 21, 'EXAMEN TEÓRICO', 20, '10.00'),
 (54, 21, 'EXAMEN PRÁCTICO', 70, '10.00'),
-(55, 21, 'TRABAJO', 10, '10.00');
+(55, 21, 'TRABAJO', 10, NULL),
+(71, 2, 'Prueba práctica', 40, '8.00'),
+(72, 30, 'Prueba práctica', 100, '9.00'),
+(73, 31, 'Prueba práctica', 100, '7.00'),
+(74, 32, 'Prueba práctica', 100, '8.00'),
+(75, 33, 'Prueba escrita', 70, '9.00'),
+(76, 33, 'Presentación de un trabajo', 30, '6.00'),
+(77, 34, 'Prueba práctica', 100, '10.00'),
+(78, 35, 'Prueba escrita 1', 40, '10.00'),
+(79, 35, 'Trabajo entregable 1', 60, '8.00'),
+(80, 36, 'Prueba escrita 2', 20, '10.00'),
+(81, 36, 'Prueba práctica 1', 65, '10.00'),
+(82, 36, 'Trabajo entregable 2', 15, '7.00'),
+(83, 37, 'Prueba práctica 2', 20, '7.00'),
+(84, 37, 'Trabajo entregable 3', 80, '8.00'),
+(85, 38, 'Prueba escrita 3', 20, '8.00'),
+(86, 38, 'Trabajo práctica 2', 80, '9.00'),
+(87, 39, 'Prueba escrita', 20, '7.70'),
+(88, 39, 'Trabajo práctico', 80, '8.40'),
+(89, 40, 'Prueba escrita', 20, '9.40'),
+(90, 40, 'Trabajo práctico', 80, '8.75'),
+(91, 41, 'Prueba escrita', 20, '7.75'),
+(92, 41, 'Trabajo práctico', 80, '9.00'),
+(93, 42, 'Prueba escrita 1', 100, '8.00'),
+(94, 43, 'Prueba escrita 2', 80, '9.00'),
+(95, 43, 'Trabajo entregable 2', 20, '6.00'),
+(96, 44, 'Trabajo entregable 3', 100, '7.86'),
+(97, 45, 'Prueba escrita 3', 20, '8.40'),
+(98, 45, 'Trabajo práctico', 80, '9.60'),
+(99, 46, 'Prueba escrita', 20, '6.80'),
+(100, 46, 'Trabajo práctico', 80, '7.75'),
+(101, 47, 'Prueba escrita', 20, '9.90'),
+(102, 47, 'Trabajo práctico', 80, '8.75'),
+(103, 48, 'Prueba escrita', 50, '8.00'),
+(104, 48, 'Prueba practica', 50, '8.00'),
+(105, 49, 'Prueba escrita', 50, '8.00'),
+(106, 49, 'Prueba practica', 50, '8.00'),
+(107, 50, 'Prueba escrita', 40, '8.00'),
+(108, 50, 'Prueba practica', 60, '8.00'),
+(109, 51, 'Prueba escrita', 25, '8.00'),
+(110, 51, 'Prueba práctica', 75, '8.00'),
+(111, 52, 'Prueba escrita', 10, '8.00'),
+(112, 52, 'Prueba práctica', 90, '8.00'),
+(113, 53, 'Prueba teórica', 50, '8.00'),
+(114, 53, 'Prueba práctica', 50, '8.00'),
+(115, 54, 'Trabajo', 100, '8.00'),
+(116, 55, 'Prueba escrita', 40, '10.00'),
+(117, 55, 'Trabajo de investigación', 25, '10.00'),
+(118, 55, 'Plan de empresa', 25, '10.00'),
+(119, 55, 'Análisis texto', 10, '10.00'),
+(120, 56, 'Prueba escrita', 25, '10.00'),
+(121, 56, 'Ejercicio práctico', 10, '10.00'),
+(122, 56, 'Ejercicio práctico', 15, '10.00'),
+(123, 56, 'Análisis de casos prácticos', 20, '10.00'),
+(124, 56, 'Ejercicio práctico', 10, '10.00'),
+(125, 56, 'Plan de empresa', 20, '10.00'),
+(126, 57, 'Prueba escrita', 40, '10.00'),
+(127, 57, 'Trabajo de investigación', 30, '10.00'),
+(128, 57, 'Plan de empresa', 30, '10.00'),
+(129, 58, 'Prueba escrita', 25, '10.00'),
+(130, 58, 'Ejercicios prácticos', 10, '10.00'),
+(131, 58, 'Ejercicios prácticos', 10, '10.00'),
+(132, 58, 'Trabajo de investigación', 10, '10.00'),
+(133, 58, 'Ejercicios prácticos', 15, '10.00'),
+(134, 58, 'Plan de empresa', 30, '10.00');
 
 -- --------------------------------------------------------
 
@@ -119,7 +181,7 @@ CREATE TABLE `unidades` (
 
 INSERT INTO `unidades` (`clave`, `asignatura`, `numero`, `nombre`, `porcentaje`) VALUES
 (1, 374, 1, 'Administración de Servicio de Directorios', 15),
-(2, 374, 2, 'Procesos del Sistema', 20),
+(2, 374, 2, 'Administración de procesos', 15),
 (14, 375, 1, 'DNS', 20),
 (15, 375, 2, 'DHCP', 10),
 (16, 375, 3, 'HTTP', 15),
@@ -127,7 +189,36 @@ INSERT INTO `unidades` (`clave`, `asignatura`, `numero`, `nombre`, `porcentaje`)
 (18, 375, 5, 'CORREO', 15),
 (19, 375, 6, 'IM y NL', 10),
 (20, 375, 7, 'AUDIO STREAMING', 10),
-(21, 375, 8, 'VIDEO STREAMING', 10);
+(21, 375, 8, 'VIDEO STREAMING', 10),
+(30, 374, 3, 'Gestionar automatización', 10),
+(31, 374, 4, 'Administración remota', 10),
+(32, 374, 5, 'Administración de impresoras', 15),
+(33, 374, 6, 'Sistemas Operativos', 15),
+(34, 374, 7, 'Scripts', 15),
+(35, 376, 1, 'Entorno de desarrollo', 10),
+(36, 376, 2, 'Implanta CMS', 10),
+(37, 376, 3, 'Administra CMS', 10),
+(38, 376, 4, 'Gestiona aplicaciones de ofimáticas', 10),
+(39, 376, 5, 'PHP (I)', 35),
+(40, 376, 6, 'PHP (II)', 25),
+(41, 376, 7, 'Cambios en CMS', 10),
+(42, 377, 1, 'Implementación de sistemas gestores', 15),
+(43, 377, 2, 'Configura el sistema gestor', 25),
+(44, 377, 3, 'Implementa métodos de control', 15),
+(45, 377, 4, 'Automatiza tareas de administración', 15),
+(46, 377, 5, 'Optimiza el rendimiento', 15),
+(47, 377, 6, 'Aplica criterios de disponibilidad', 15),
+(48, 378, 1, 'Tratamiento de la información', 25),
+(49, 378, 2, 'Implementa mecanismos de seguridad activa', 25),
+(50, 378, 3, 'Implementa técnicas seguras de acceso remoto', 10),
+(51, 378, 4, 'Implementa cortafuegos', 10),
+(52, 378, 5, 'Implementa proxy', 10),
+(53, 378, 6, 'Implementa virtualización', 10),
+(54, 378, 7, 'Reconoce la legislación', 10),
+(55, 381, 1, 'Iniciativa emprendedora', 25),
+(56, 381, 2, 'Creación de pequeña empresa', 25),
+(57, 381, 3, 'Constitución de empresa', 25),
+(58, 381, 4, 'Gestión administrativa', 25);
 
 --
 -- Índices para tablas volcadas
@@ -159,13 +250,13 @@ ALTER TABLE `unidades`
 -- AUTO_INCREMENT de la tabla `instrumentos`
 --
 ALTER TABLE `instrumentos`
-  MODIFY `clave` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `clave` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT de la tabla `unidades`
 --
 ALTER TABLE `unidades`
-  MODIFY `clave` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `clave` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
