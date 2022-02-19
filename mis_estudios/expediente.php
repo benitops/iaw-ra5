@@ -12,11 +12,14 @@ require_once 'app/Configuracion.php';
         <link rel="stylesheet" href="estilos.css">
     </head>
     <body>
-        <div class="encabezado centrado">
-            <h1>ASIGNATURAS</h1>
+        <div class="alineado-izq">
+            <a href="index.php">< Volver</a>
         </div>
-        <div class="contenido">
-            <form method="post" action="">
+        <div class="centrado">
+            <h1><img src="img/birrete.png"/> EXPEDIENTE</h1>
+        </div>
+        <div class="centrado">
+            <form>
                 <table>
                     <tr>
                         <th>Código</th>
@@ -25,7 +28,6 @@ require_once 'app/Configuracion.php';
                     </tr>
                     <?php mostrarAsignaturasNotas(); ?>
                 </table>
-                <input type="submit" value="Guardar cambios"/>
             </form>
         </div>
     </body>

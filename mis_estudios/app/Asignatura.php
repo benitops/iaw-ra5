@@ -9,6 +9,7 @@ class Asignatura
 
 
     /**
+     * Establece el valor de código
      * @param int|string $codigo
      */
     public function setCodigo(mixed $codigo): void
@@ -17,6 +18,7 @@ class Asignatura
     }
 
     /**
+     * Obtener el valor del código
      * @return int
      */
     public function obtenerCodigo(): int
@@ -25,6 +27,7 @@ class Asignatura
     }
 
     /**
+     * Establece el valor del nombre
      * @param string $nombre
      */
     public function setNombre(string $nombre): void
@@ -33,6 +36,7 @@ class Asignatura
     }
 
     /**
+     * Obtener el valor del nombre
      * @return string
      */
     public function obtenerNombre(): string
@@ -41,6 +45,7 @@ class Asignatura
     }
 
     /**
+     * Establece el valor de horas_semana
      * @param string|int $horas_semana
      */
     public function setHorasSemana(mixed $horas_semana): void
@@ -49,6 +54,7 @@ class Asignatura
     }
 
     /**
+     * Establece el valor de profesor
      * @param string $profesor
      */
     public function setProfesor(string $profesor): void
@@ -56,11 +62,18 @@ class Asignatura
         $this->profesor = $profesor;
     }
 
+    /**
+     * Comprueba si el código de la asignatura es valido.
+     * Para que sea válido, el código debe no estar siendo usado.
+     * @param $codigo
+     * @return bool
+     */
     public function validarCodigo($codigo = NULL){
         global $db;
-
+        // Ponemos el valor por defecto NULL para permitir que se pueda usar la función fuera de la clase
         if(is_null($codigo)){
-            $codigo = $this->codigo;
+            $codigo = $this->codigo; // Si el valor es NULL, se coge el valor del objeto. Si no lo es, se usa el argumento.
+
         }
 
         $query = "SELECT nombre FROM asignaturas WHERE CODIGO = :codigo;";
@@ -74,14 +87,17 @@ class Asignatura
         }
     }
 
+    /**
+     * Inserta en la tabla todos los valores de la Asignatura.
+     * @return bool
+     */
     public function crear()
     {
-        // Usamos la variable $db que hemos definido en el archivo de configuración, la cual contiene la conexión a la base de datos.
-
+        // Se comprueba si el código de la asignatura es válido para evitar que se use uno ya en uso.
         if ($this->validarCodigo($this->codigo)) {
-
+            // Usamos la variable $db que hemos definido en el archivo de configuración, la cual contiene la conexión a la base de datos.
             global $db;
-            $query = "INSERT INTO mis_estudios.asignaturas (`codigo`, `nombre`, `horas_semana`, `profesor`) VALUES (:codigo, :nombre, :horas_semana, :profesor);";
+            $query = "INSERT INTO asignaturas (`codigo`, `nombre`, `horas_semana`, `profesor`) VALUES (:codigo, :nombre, :horas_semana, :profesor);";
             $consulta = $db->prepare($query);
             $consulta->bindParam(':codigo', $this->codigo);
             $consulta->bindParam(':nombre', $this->nombre);
@@ -97,13 +113,20 @@ class Asignatura
             }
 
         } else {
+            // Si está en uso el código, se devuelve false.
             return false;
         }
     }
 
+    /**
+     * Se elimina la asignatura y, a su vez, sus unidades.
+     * @return bool|string
+     */
     public function eliminar(){
         global $db;
+        // Obtenemos sus unidades
         $unidades = $this->obtenerUnidades();
+        // Si hay resultados, las eliminamos
 
         if ($unidades){
             foreach ($unidades as $u){
@@ -111,12 +134,15 @@ class Asignatura
                 $ins->setClave($u['clave']);
                 if (!$ins->eliminar()){
                     return "Error al eliminar las unidades a través de la asignatura";
-                    exit();
+                    exit(); // Si hubiera algún error, dejamos de ejecutar el script.
+
                 }
             }
         }
 
-        $query = "DELETE FROM mis_estudios.asignaturas WHERE codigo = :codigo;";
+        // Borramos la asignatura
+        $query = "DELETE FROM asignaturas WHERE codigo = :codigo;";
+
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
 
@@ -129,10 +155,14 @@ class Asignatura
         }
     }
 
+    /**
+     * Actualizamos los valores de la asignatura
+     * @return bool
+     */
     public function actualizar(): bool
     {
         global $db;
-        $query = "UPDATE mis_estudios.asignaturas t
+        $query = "UPDATE asignaturas t
                     SET t.nombre       = :nombre,
                         t.horas_semana = :horas_semana,
                         t.profesor     = :profesor
@@ -152,11 +182,31 @@ class Asignatura
         }
     }
 
+    /**
+     * Actualiza el codigo de la asignatura
+     * @param $nuevoCodigo
+     * @return bool
+     */
     public function actualizarCodigo($nuevoCodigo): bool
     {
+        // Comprobamos primero si el código es válido
         if ($this->validarCodigo($nuevoCodigo)){
             global $db;
-            $query = "UPDATE mis_estudios.asignaturas t
+            // Seleccionamos todas sus unidades
+            $unidades = $this->obtenerUnidades();
+            foreach ($unidades as $u){
+                $unidad = new Unidad();
+                $unidad->setClave($u['clave']);
+                $unidad->setAsignatura($nuevoCodigo);
+                // Actualizamos el código en todas sus unidades
+                if (!$unidad->actualizarAsignatura()){
+                    echo "Error al actualizar la asignatura nueva de la unidad";
+                    exit(); // Si hubiera algún error, dejamos de ejecutar el script.
+                }
+            }
+
+            // Cambiamos el código antiguo por el nuevo de Asignatura
+            $query = "UPDATE asignaturas t
                     SET t.codigo = :nuevoCodigo
                     WHERE t.codigo = :codigo; ";
             $consulta = $db->prepare($query);
@@ -164,15 +214,19 @@ class Asignatura
             $consulta->bindParam(":codigo", $this->codigo);
 
             if ($consulta->execute()){
-                return true;
+                return true; // Si se ejecuta correctamente
             } else {
-                return false;
+                return false; // Si no se ejecuta
             }
         } else {
-            return false;
+            return false; // Si el código no es valido
         }
     }
 
+    /**
+     * Establecemos los atributos de la Asignatura con los datos de la base de datos
+     * @return bool
+     */
     public function obtenerDetalles(){
         global $db;
         $query = "SELECT * FROM asignaturas WHERE codigo = :codigo;";
@@ -191,6 +245,10 @@ class Asignatura
 
     }
 
+    /**
+     * Obtenemos todas las unidades que tengan esta Asignatura
+     * @return bool|array
+     */
 
     public function obtenerUnidades(): bool|array
     {
@@ -206,6 +264,11 @@ class Asignatura
         }
     }
 
+    /**
+     * Generamos el código HTML con los datos de la Asignatura
+     * @return void
+     */
+
     public function mostrarUnidades(){
         $unidades = $this->obtenerUnidades();
         $i = 1;
@@ -214,9 +277,9 @@ class Asignatura
                 ?>
                 <tr>
                     <td><input type="hidden" name="unidades[<?php echo $i; ?>][clave]" value="<?php echo $unidad['clave'] ?>" /></td>
-                    <td><input type="text" name="unidades[<?php echo $i; ?>][numero]" value="<?php echo $unidad['numero'] ?>" /></td>
+                    <td><input type="number" name="unidades[<?php echo $i; ?>][numero]" value="<?php echo $unidad['numero'] ?>" /></td>
                     <td><input type="text" name="unidades[<?php echo $i; ?>][nombre]" value="<?php echo $unidad['nombre'] ?>" /></td>
-                    <td><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $unidad['porcentaje'] ?>" /></td>
+                    <td width="20px"><input type="number" name="unidades[<?php echo $i; ?>][porcentaje]" value="<?php echo $unidad['porcentaje'] ?>"/></td>
                     <td><a href="?operacion=eliminar&clave=<?php echo $unidad['clave'] ?>"><img src="img/remove32.png"></a></td>
                 </tr>
                 <?php $i++;
@@ -230,6 +293,11 @@ class Asignatura
         </tr>
         <?php
     }
+
+    /**
+     * Obtenemos todas los instrumentos que tenga esta Asignatura
+     * @return bool|array
+     */
 
     public function obtenerInstrumentos(): bool|array
     {
@@ -247,6 +315,11 @@ class Asignatura
         }
     }
 
+    /**
+     * Generamos el código HTML con los datos de la Asignatura
+     * @return void
+     */
+  
     public function mostrarInstrumentos(){
         $instrumentos = $this->obtenerInstrumentos();
         $i = 1;
@@ -257,6 +330,9 @@ class Asignatura
                     <td>
                         <select name="instrumentos[<?php echo $i; ?>][unidad]">
                             <?php foreach ($this->obtenerUnidades() as $u){
+                                //Se obtienen las unidades para el dropdown
+                                //Por cada unidad se añade una opción
+                                //Se comprueba si la unidad y la clave es la misma, para que aparezca seleccionado
                                 if ($instrumento['unidad'] == $u['clave']) { ?>
                                     <option value="<?php echo $u['clave']; ?>" selected><?php echo $u['numero'].'. '.$u['nombre']; ?></option>
                                     <?php } else { ?>
@@ -291,6 +367,11 @@ class Asignatura
         <?php
     }
 
+    /**
+     * Calculamos la nota media de la asignatura
+     * @return false|float|int|null
+     */
+
     public function obtenerNotaMedia(){
         global $db;
         $query = "SELECT clave, porcentaje 
@@ -302,15 +383,14 @@ class Asignatura
         if ($consulta->execute()){
             $dividendo = 0;
 
+            // Se comprueba si hay unidades
+
             if($consulta->rowCount() == 0){
                 return NULL;
             } else {
                 foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
                     $unidad = new Unidad();
                     $unidad->setClave($item['clave']);
-
-                    //TODO Evitar que se tengan en cuenta unidades sin criterios de evaluación
-
                     if (!is_null($unidad->obtenerNotaMedia())){
                         $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
                     }

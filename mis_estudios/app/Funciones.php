@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Obtenemos todas las asignaturas
+ * @return bool|array|string
+ */
+
 function obtenerAsignaturas(): bool|array|string
 {
     global $db;
@@ -13,6 +18,12 @@ function obtenerAsignaturas(): bool|array|string
         exit();
     }
 }
+
+
+/**
+ * Renderizamos el código HTML formateado para crear filas por cada asignatura y para añadir una nueva.
+ * @return void
+ */
 
 function mostrarAsignaturas(){
     $asignaturas = obtenerAsignaturas();
@@ -46,6 +57,12 @@ function mostrarAsignaturas(){
     }
 }
 
+
+/**
+ * Muestra el cálculo de las notas medias de cada asignatura
+ * @return void
+ */
+
 function mostrarAsignaturasNotas(){
     $asignaturas = obtenerAsignaturas();
     if ($asignaturas){
@@ -55,9 +72,9 @@ function mostrarAsignaturasNotas(){
             $asignatura->setCodigo($a['codigo']);
             ?>
             <tr>
-                <td><input type="text" name="expediente[<?php echo $i; ?>][id]" value="<?php echo $a['codigo'] ?>" /></td>
-                <td><input type="text" name="expediente[<?php echo $i; ?>][nombre]" value="<?php echo $a['nombre'] ?>" /></td>
-                <td><input type="text" name="expediente[<?php echo $i; ?>][notaMedia]" value="<?php echo $asignatura->obtenerNotaMedia(); ?>" /></td>
+                <td><input disabled type="text" name="expediente[<?php echo $i; ?>][id]" value="<?php echo $a['codigo'] ?>" /></td>
+                <td><input disabled type="text" name="expediente[<?php echo $i; ?>][nombre]" value="<?php echo $a['nombre'] ?>" /></td>
+                <td><input disabled type="text" name="expediente[<?php echo $i; ?>][notaMedia]" value="<?php echo $asignatura->obtenerNotaMedia(); ?>" /></td>
             </tr>
             <?php
             $i++;
