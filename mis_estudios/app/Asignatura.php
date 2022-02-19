@@ -73,6 +73,7 @@ class Asignatura
         // Ponemos el valor por defecto NULL para permitir que se pueda usar la función fuera de la clase
         if(is_null($codigo)){
             $codigo = $this->codigo; // Si el valor es NULL, se coge el valor del objeto. Si no lo es, se usa el argumento.
+
         }
 
         $query = "SELECT nombre FROM asignaturas WHERE CODIGO = :codigo;";
@@ -126,6 +127,7 @@ class Asignatura
         // Obtenemos sus unidades
         $unidades = $this->obtenerUnidades();
         // Si hay resultados, las eliminamos
+
         if ($unidades){
             foreach ($unidades as $u){
                 $ins = new Unidad();
@@ -133,12 +135,14 @@ class Asignatura
                 if (!$ins->eliminar()){
                     return "Error al eliminar las unidades a través de la asignatura";
                     exit(); // Si hubiera algún error, dejamos de ejecutar el script.
+
                 }
             }
         }
 
         // Borramos la asignatura
         $query = "DELETE FROM asignaturas WHERE codigo = :codigo;";
+
         $consulta = $db->prepare($query);
         $consulta->bindParam(':codigo', $this->codigo);
 
@@ -245,6 +249,7 @@ class Asignatura
      * Obtenemos todas las unidades que tengan esta Asignatura
      * @return bool|array
      */
+
     public function obtenerUnidades(): bool|array
     {
         global $db;
@@ -263,6 +268,7 @@ class Asignatura
      * Generamos el código HTML con los datos de la Asignatura
      * @return void
      */
+
     public function mostrarUnidades(){
         $unidades = $this->obtenerUnidades();
         $i = 1;
@@ -292,6 +298,7 @@ class Asignatura
      * Obtenemos todas los instrumentos que tenga esta Asignatura
      * @return bool|array
      */
+
     public function obtenerInstrumentos(): bool|array
     {
         global $db;
@@ -312,6 +319,7 @@ class Asignatura
      * Generamos el código HTML con los datos de la Asignatura
      * @return void
      */
+  
     public function mostrarInstrumentos(){
         $instrumentos = $this->obtenerInstrumentos();
         $i = 1;
@@ -363,6 +371,7 @@ class Asignatura
      * Calculamos la nota media de la asignatura
      * @return false|float|int|null
      */
+
     public function obtenerNotaMedia(){
         global $db;
         $query = "SELECT clave, porcentaje 
@@ -373,14 +382,15 @@ class Asignatura
 
         if ($consulta->execute()){
             $dividendo = 0;
+
             // Se comprueba si hay unidades
+
             if($consulta->rowCount() == 0){
                 return NULL;
             } else {
                 foreach ($consulta->fetchAll(PDO::FETCH_ASSOC) as $item){
                     $unidad = new Unidad();
                     $unidad->setClave($item['clave']);
-
                     if (!is_null($unidad->obtenerNotaMedia())){
                         $dividendo += $unidad->obtenerNotaMedia() * $item['porcentaje'];
                     }

@@ -9,7 +9,9 @@ class Instrumento
     public mixed    $calificacion;
 
     /**
+
      * Establece el valor de clave
+
      * @param int $clave
      */
     public function setClave(int $clave): void
@@ -74,6 +76,7 @@ class Instrumento
             return false;
         }
     }
+
 
     /**
      * Actualiza los datos del instrumento

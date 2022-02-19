@@ -1,8 +1,10 @@
 <?php
+
 /**
  * Obtenemos todas las asignaturas
  * @return bool|array|string
  */
+
 function obtenerAsignaturas(): bool|array|string
 {
     global $db;
@@ -17,10 +19,12 @@ function obtenerAsignaturas(): bool|array|string
     }
 }
 
+
 /**
  * Renderizamos el código HTML formateado para crear filas por cada asignatura y para añadir una nueva.
  * @return void
  */
+
 function mostrarAsignaturas(){
     $asignaturas = obtenerAsignaturas();
     if ($asignaturas){
@@ -53,10 +57,12 @@ function mostrarAsignaturas(){
     }
 }
 
+
 /**
  * Muestra el cálculo de las notas medias de cada asignatura
  * @return void
  */
+
 function mostrarAsignaturasNotas(){
     $asignaturas = obtenerAsignaturas();
     if ($asignaturas){

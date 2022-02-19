@@ -30,6 +30,7 @@ if ($check->fetchColumn()){
     $db->exec($sql);
 }
 
+
 // Iniciamos las sesiones para poder saber sobre qué asignatura trabajar.
 session_start();
 
